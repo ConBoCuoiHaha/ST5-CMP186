@@ -1,0 +1,471 @@
+{
+    "info": {
+        "_postman_id": "ecom-collection-v8",
+        "name": "Ecommerce API Collection V8 (FIXED)",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "event": [
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "pm.test(\"Status code is 200\", function () {",
+                    "    pm.response.to.have.status(200);",
+                    "});",
+                    "",
+                    "pm.test(\"API Logic Success\", function () {",
+                    "    var jsonData = pm.response.json();",
+                    "    if (jsonData.hasOwnProperty('errCode')) {",
+                    "        pm.expect(jsonData.errCode).to.eql(0, \"Error: \" + jsonData.errMessage);",
+                    "    }",
+                    "    if (jsonData.hasOwnProperty('status') && jsonData.status === false) {",
+                    "        pm.expect.fail(\"API returned status: false. Message: \" + jsonData.errMessage);",
+                    "    }",
+                    "});",
+                    "",
+                    "pm.test(\"Response time < 2000ms\", function () {",
+                    "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                    "});"
+                ]
+            }
+        }
+    ],
+    "item": [
+        {
+            "name": "1. Create Admin User",
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "exec": [
+                            "pm.environment.set(\"adminEmail\", \"admin\" + Date.now() + \"@test.com\");"
+                        ]
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"email\": \"{{adminEmail}}\",\n    \"password\": \"admin123\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"User\",\n    \"address\": \"Hanoi\",\n    \"phonenumber\": \"0987654321\",\n    \"genderId\": \"M\",\n    \"roleId\": \"R1\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/create-new-user",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "create-new-user"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "2. Login Admin",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var jsonData = pm.response.json();",
+                            "if (jsonData.errCode === 0 && jsonData.accessToken) {",
+                            "    pm.environment.set(\"token\", jsonData.accessToken);",
+                            "    pm.environment.set(\"userId\", jsonData.user.id);",
+                            "    console.log(\"Admin Token:\", jsonData.accessToken);",
+                            "}"
+                        ]
+                    }
+                }
+            ],
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"email\": \"{{adminEmail}}\",\n    \"password\": \"admin123\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "login"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "3. Get All Users",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/get-all-user?limit=10&offset=0&keyword=",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "get-all-user"
+                    ],
+                    "query": [
+                        {
+                            "key": "limit",
+                            "value": "10"
+                        },
+                        {
+                            "key": "offset",
+                            "value": "0"
+                        },
+                        {
+                            "key": "keyword",
+                            "value": ""
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "4. Create Product",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Test Product\",\n    \"contentHTML\": \"<p>Test</p>\",\n    \"contentMarkdown\": \"Test\",\n    \"statusId\": \"S1\",\n    \"categoryId\": \"C1\",\n    \"brandId\": \"B1\",\n    \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==\",\n    \"nameDetail\": \"Detail\",\n    \"originalPrice\": 100,\n    \"discountPrice\": 90,\n    \"description\": \"Test\",\n    \"width\": 10,\n    \"height\": 10,\n    \"sizeId\": \"S\",\n    \"weight\": 1\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/create-new-product",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "create-new-product"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "5. Get Products (Capture ID)",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var jsonData = pm.response.json();",
+                            "if (jsonData.errCode === 0 && jsonData.data && jsonData.data.length > 0) {",
+                            "    var product = jsonData.data[jsonData.data.length - 1];",
+                            "    if (product.productDetail && product.productDetail[0] && product.productDetail[0].productDetailSize && product.productDetail[0].productDetailSize[0]) {",
+                            "        pm.environment.set(\"productDetailSizeId\", product.productDetail[0].productDetailSize[0].id);",
+                            "        console.log(\"ProductDetailSizeId:\", product.productDetail[0].productDetailSize[0].id);",
+                            "    }",
+                            "}"
+                        ]
+                    }
+                }
+            ],
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/get-all-product-admin?limit=100&offset=0",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "get-all-product-admin"
+                    ],
+                    "query": [
+                        {
+                            "key": "limit",
+                            "value": "100"
+                        },
+                        {
+                            "key": "offset",
+                            "value": "0"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "6. Create Supplier",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Test Supplier\",\n    \"address\": \"Test Address\",\n    \"phonenumber\": \"0123456789\",\n    \"email\": \"supplier@test.com\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/create-new-supplier",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "create-new-supplier"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "7. Get Suppliers (Capture ID)",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var jsonData = pm.response.json();",
+                            "if (jsonData.errCode === 0 && jsonData.data && jsonData.data.length > 0) {",
+                            "    pm.environment.set(\"supplierId\", jsonData.data[jsonData.data.length - 1].id);",
+                            "    console.log(\"SupplierId:\", jsonData.data[jsonData.data.length - 1].id);",
+                            "}"
+                        ]
+                    }
+                }
+            ],
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/get-all-supplier?limit=100&offset=0&keyword=",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "get-all-supplier"
+                    ],
+                    "query": [
+                        {
+                            "key": "limit",
+                            "value": "100"
+                        },
+                        {
+                            "key": "offset",
+                            "value": "0"
+                        },
+                        {
+                            "key": "keyword",
+                            "value": ""
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "8. Create Receipt (Stock)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"userId\": {{userId}},\n    \"supplierId\": {{supplierId}},\n    \"productDetailSizeId\": {{productDetailSizeId}},\n    \"quantity\": 100,\n    \"price\": 50\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/create-new-receipt",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "create-new-receipt"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "9. Create Address",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"userId\": {{userId}},\n    \"shipName\": \"Test\",\n    \"shipAdress\": \"Test Address\",\n    \"shipEmail\": \"test@test.com\",\n    \"shipPhonenumber\": \"0987654321\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/create-new-address-user",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "create-new-address-user"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "10. Get Address (Capture ID)",
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var jsonData = pm.response.json();",
+                            "if (jsonData.errCode === 0 && jsonData.data && jsonData.data.length > 0) {",
+                            "    pm.environment.set(\"addressUserId\", jsonData.data[0].id);",
+                            "    console.log(\"AddressUserId:\", jsonData.data[0].id);",
+                            "}"
+                        ]
+                    }
+                }
+            ],
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/get-all-address-user?userId={{userId}}",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "get-all-address-user"
+                    ],
+                    "query": [
+                        {
+                            "key": "userId",
+                            "value": "{{userId}}"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "11. Add to Cart",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"userId\": {{userId}},\n    \"productdetailsizeId\": {{productDetailSizeId}},\n    \"quantity\": 1\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/add-shopcart",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "add-shopcart"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "12. Create Order",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"addressUserId\": {{addressUserId}},\n    \"typeShipId\": 1,\n    \"isPaymentOnlien\": 0,\n    \"voucherId\": null,\n    \"note\": \"Test Order\",\n    \"arrDataShopCart\": [\n        {\n            \"productId\": {{productDetailSizeId}},\n            \"quantity\": 1,\n            \"realPrice\": 100\n        }\n    ]\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/create-new-order",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "create-new-order"
+                    ]
+                }
+            }
+        }
+    ]
+}

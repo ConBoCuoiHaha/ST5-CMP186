@@ -1,0 +1,47 @@
+{
+    "id": "ecom-env-id",
+    "name": "Ecommerce Environment",
+    "values": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:8003",
+            "enabled": true
+        },
+        {
+            "key": "limit",
+            "value": "10",
+            "enabled": true
+        },
+        {
+            "key": "offset",
+            "value": "0",
+            "enabled": true
+        },
+        {
+            "key": "keyword",
+            "value": "",
+            "enabled": true
+        },
+        {
+            "key": "id",
+            "value": "1",
+            "enabled": true
+        },
+        {
+            "key": "email",
+            "value": "admin@gmail.com",
+            "enabled": true
+        },
+        {
+            "key": "type",
+            "value": "ROLE",
+            "enabled": true
+        },
+        {
+            "key": "userId",
+            "value": "1",
+            "enabled": true
+        }
+    ],
+    "_postman_variable_scope": "environment"
+}
