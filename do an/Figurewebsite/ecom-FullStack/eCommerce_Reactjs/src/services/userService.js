@@ -148,6 +148,28 @@ const saveUserVoucherService = (data) => {
 const getAllVoucherByUserIdService = (data) => {
     return axios.get(`/api/get-all-voucher-by-userid?limit=${data.limit}&offset=${data.offset}&id=${data.id}`)
 }
+const createNewProductService = (data) => {
+    return axios.post('/api/create-new-product', data);
+}
+const getAllProductAdminService = (limit, offset, keyword, categoryId, brandId) => {
+    return axios.get(`/api/get-all-product-admin?limit=${limit}&offset=${offset}&keyword=${keyword}&categoryId=${categoryId}&brandId=${brandId}`);
+}
+const getAllProductUserService = (limit, offset, categoryId, brandId, keyword) => {
+    return axios.get(`/api/get-all-product-user?limit=${limit}&offset=${offset}&categoryId=${categoryId}&brandId=${brandId}&keyword=${keyword}`);
+}
+const updateProductService = (data) => {
+    return axios.put('/api/update-product', data);
+}
+const deleteProductService = (data) => {
+    return axios.delete('/api/delete-product', {
+        data: {
+            id: data.id
+        }
+    });
+}
+const getDetailProductByIdService = (id) => {
+    return axios.get(`/api/get-detail-product-by-id?id=${id}`);
+}
 //========================REVIEW======================//
 // const deleteItemShopCartService = (data) => {
 //     return axios.delete(`/api/delete-item-shopcart`, data)
