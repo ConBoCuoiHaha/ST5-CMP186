@@ -16,7 +16,7 @@ cd "do an/Figurewebsite/ecom-FullStack/ecomAPI"
 # 2. Cài đặt thư viện (nếu chưa cài)
 npm install
 # 3. Chạy server
-npm start
+npm start (npm run dev)
 Note: Nếu chạy thành công, thường sẽ báo "Server running on port..." (thường là 8080 hoặc 3000 tùy cấu hình).
 
 2. Chạy Frontend (React App)
@@ -28,5 +28,5 @@ cd "do an/Figurewebsite/ecom-FullStack/eCommerce_Reactjs"
 # 2. Cài đặt thư viện (nếu chưa cài)
 npm install
 # 3. Chạy ứng dụng React
-npm start
+npm start/
 Note: Trình duyệt sẽ tự động mở lên (thường là http://localhost:3000).
