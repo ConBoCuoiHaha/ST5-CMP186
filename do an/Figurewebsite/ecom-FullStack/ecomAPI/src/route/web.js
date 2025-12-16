@@ -66,7 +66,20 @@ let initwebRoutes = (app) => {
     router.put('/api/update-receipt', middlewareControllers.verifyTokenAdmin, receiptController.updateReceipt)
     router.delete('/api/delete-receipt', middlewareControllers.verifyTokenAdmin, receiptController.deleteReceipt)
     router.post('/api/create-new-detail-receipt', middlewareControllers.verifyTokenAdmin, receiptController.createNewReceiptDetail)
+
+    //================= Hung PRODUCT================================//
+    router.post('/api/create-new-product', productController.handleCreateNewProduct);
+    router.get('/api/get-all-product-admin', productController.getAllProductAdmin);
+    router.get('/api/get-all-product-user', productController.getAllProductUser);
+    router.put('/api/update-product', productController.handleUpdateProduct);
+    router.delete('/api/delete-product', productController.handleDeleteProduct);
+    router.get('/api/get-detail-product-by-id', productController.getDetailProductById);
+    router.get('/api/get-all-product', productController.getAllProduct);
+    router.post('/api/unactive-product', productController.UnactiveProduct);
+    router.post('/api/active-product', productController.ActiveProduct);
+    router.get('/api/get-product-recommend', productController.getProductRecommend);
     return app.use("/", router);
+
 }
 
 module.exports = initwebRoutes;
