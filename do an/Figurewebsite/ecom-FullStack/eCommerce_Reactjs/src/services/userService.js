@@ -151,10 +151,10 @@ const getAllVoucherByUserIdService = (data) => {
 const createNewProductService = (data) => {
     return axios.post('/api/create-new-product', data);
 }
-const getAllProductAdminService = (limit, offset, keyword, categoryId, brandId) => {
+const getAllProductAdmin = (limit, offset, keyword, categoryId, brandId) => {
     return axios.get(`/api/get-all-product-admin?limit=${limit}&offset=${offset}&keyword=${keyword}&categoryId=${categoryId}&brandId=${brandId}`);
 }
-const getAllProductUserService = (limit, offset, categoryId, brandId, keyword) => {
+const getAllProductUser = (limit, offset, categoryId, brandId, keyword) => {
     return axios.get(`/api/get-all-product-user?limit=${limit}&offset=${offset}&categoryId=${categoryId}&brandId=${brandId}&keyword=${keyword}`);
 }
 const updateProductService = (data) => {
@@ -169,6 +169,15 @@ const deleteProductService = (data) => {
 }
 const getDetailProductByIdService = (id) => {
     return axios.get(`/api/get-detail-product-by-id?id=${id}`);
+}
+const handleBanProductService = (data) => {
+    return axios.post('/api/unactive-product', data);
+}
+const handleActiveProductService = (data) => {
+    return axios.post('/api/active-product', data);
+}
+const getProductRecommendService = (data) => {
+    return axios.get(`/api/get-product-recommend?limit=${data.limit}&userId=${data.userId}`);
 }
 //========================REVIEW======================//
 // const deleteItemShopCartService = (data) => {
@@ -325,8 +334,8 @@ export {
     getAllUsers, getAllCodeService, createNewUser, DeleteUserService, getDetailUserById, UpdateUserService,
     createAllCodeService, getDetailAllcodeById, UpdateAllcodeService, DeleteAllcodeService, handleLoginService,
     handleSendVerifyEmail, handleVerifyEmail, handleChangePassword,
-    // CreateNewProduct, getAllProductUser, getAllProductAdmin,
-    // handleBanProductService, handleActiveProductService, getDetailProductByIdService, UpdateProductService,
+    createNewProductService, getAllProductUser, getAllProductAdmin,
+    handleBanProductService, handleActiveProductService, getDetailProductByIdService, updateProductService,
     // getAllProductDetailByIdService, getAllProductDetailImageByIdService, CreateNewProductDetailService,
     // getProductDetailByIdService, UpdateProductDetailService, createNewProductImageService, getProductDetailImageByIdService,
     // UpdateProductDetailImageService, DeleteProductDetailImageService, DeleteProductDetailService,
@@ -352,6 +361,6 @@ export {
     getAllSupplier, createNewReceiptService, getAllReceipt, getDetailReceiptByIdService, deleteReceiptService, updateReceiptService, createNewReceiptDetailService,
     getStatisticOverturn, getStatisticProfit, getDetailUserByEmail,
     // getProductShopcartService, getProductRecommendService,
-    getStatisticStockProduct, getExchangeRate,
+    getStatisticStockProduct, getExchangeRate, deleteProductService, getProductRecommendService,
     // paymentOrderVnpayService, confirmOrderVnpay, paymentOrderVnpaySuccessService
 }

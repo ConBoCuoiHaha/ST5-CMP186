@@ -36,7 +36,7 @@ const ManageProduct = () => {
             brandId: 'ALL',
             limit: PAGINATION.pagerow,
             offset: 0,
-            keyword:keyword
+            keyword: keyword
 
         })
         if (arrData && arrData.errCode === 0) {
@@ -57,7 +57,7 @@ const ManageProduct = () => {
                 sortPrice: '',
                 categoryId: 'ALL',
                 brandId: 'ALL',
-                keyword:'',
+                keyword: '',
                 limit: PAGINATION.pagerow,
                 offset: numberPage * PAGINATION.pagerow
 
@@ -91,38 +91,38 @@ const ManageProduct = () => {
             sortPrice: '',
             categoryId: 'ALL',
             brandId: 'ALL',
-            keyword:keyword
+            keyword: keyword
         })
         if (arrData && arrData.errCode === 0) {
             setdataProduct(arrData.data)
 
         }
     }
-    let handleSearchProduct = (keyword) =>{
+    let handleSearchProduct = (keyword) => {
         loadProduct(keyword)
         setkeyword(keyword)
     }
-    let handleOnchangeSearch = (keyword) =>{
-        if(keyword === ''){
+    let handleOnchangeSearch = (keyword) => {
+        if (keyword === '') {
             loadProduct(keyword)
             setkeyword(keyword)
-         }
-        
+        }
+
     }
-    let handleOnClickExport =async () =>{
+    let handleOnClickExport = async () => {
         let res = await getAllProductAdmin({
             sortName: '',
             sortPrice: '',
             categoryId: 'ALL',
             brandId: 'ALL',
-            keyword:'',
+            keyword: '',
             limit: '',
             offset: ''
         })
-        if(res && res.errCode === 0){
-            await CommonUtils.exportExcel(res.data,"Danh sách sản phẩm","ListProduct")
+        if (res && res.errCode === 0) {
+            await CommonUtils.exportExcel(res.data, "Danh sách sản phẩm", "ListProduct")
         }
-       
+
     }
     return (
         <div className="container-fluid px-4">
@@ -135,17 +135,17 @@ const ManageProduct = () => {
                     Danh sách sản phẩm
 
                 </div>
-             
-                   
-              
+
+
+
                 <div className="card-body">
-                  
+
                     <div className='row'>
-                    <div  className='col-4'>
-                    <FormSearch title={"tên sản phẩm"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchProduct} />                    </div>
-                    <div className='col-8'>
-                    <button  style={{float:'right'}} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
-                    </div>
+                        <div className='col-4'>
+                            <FormSearch title={"tên sản phẩm"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchProduct} />                    </div>
+                        <div className='col-8'>
+                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                        </div>
                     </div>
                     <div className="table-responsive">
                         <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">

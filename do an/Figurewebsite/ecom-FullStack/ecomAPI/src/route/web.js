@@ -75,6 +75,9 @@ let initwebRoutes = (app) => {
     router.delete('/api/delete-product', productController.handleDeleteProduct);
     router.get('/api/get-detail-product-by-id', productController.getDetailProductById);
     router.get('/api/get-all-product', productController.getAllProduct);
+    router.post('/api/unactive-product', productController.UnactiveProduct);
+    router.post('/api/active-product', productController.ActiveProduct);
+    router.get('/api/get-product-recommend', productController.getProductRecommend);
     return app.use("/", router);
 
 }
