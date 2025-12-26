@@ -2,13 +2,8 @@
 import PayOS from "@payos/node";
 
 // Khởi tạo PayOS với các key (Lấy tại https://payos.vn/)
-// Tốt nhất là nên lưu vào file .env, nhưng ở đây mình để tạm biến để bạn dễ hình dung
-const payos = new PayOS(
-  "1c31c04e-ec7b-45b5-b2d7-bbf0520d12bc", // Thay bằng Client ID của bạn
-  "ff8a5543-a63e-40c3-b089-37073c8c6496", // Thay bằng API Key của bạn
-  "be01044ed052d85a9e8875bda00beefcaaeae03af3c26981874f570f9e7ed6c4" // Thay bằng Checksum Key của bạn
-);
 
+/////TUANPAYMENT.js////////
 let handleCreatePayment = async (req, res) => {
   try {
     // Lấy thông tin đơn hàng từ Client gửi lên
