@@ -100,6 +100,23 @@ let initwebRoutes = (app) => {
     commentController.deleteComment
   );
 
+  //=================API ORDER==============================//
+  router.post('/api/create-new-order', orderController.createNewOrder)
+  router.get('/api/get-all-order', orderController.getAllOrders)
+  router.get('/api/get-detail-order-by-id', orderController.getDetailOrderById)
+  router.put('/api/update-status-order', orderController.updateStatusOrder)
+  router.get('/api/get-all-order-by-user', orderController.getAllOrdersByUser)
+  router.post('/api/payment-order', orderController.paymentOrder)
+  router.post('/api/payment-order-success', orderController.paymentOrderSuccess)
+  router.post('/api/confirm-order', orderController.confirmOrder)
+  router.get('/api/get-all-order-by-shipper', orderController.getAllOrdersByShipper)
+  router.post('/api/payment-vnpay', orderController.paymentOrderVnpay)
+  router.post('/api/confirm-vnpay', orderController.confirmOrderVnpay)
+  router.get('/api/vnpay-return', orderController.confirmOrderVnpay)
+  router.post('/api/payment-vnpay-success', orderController.paymentOrderVnpaySuccess)
+  router.post('/api/update-image-order', orderController.updateImageOrder)
+
+
   //=================API STATISTIC==============================//
   router.get(
     "/api/get-count-card-statistic",
