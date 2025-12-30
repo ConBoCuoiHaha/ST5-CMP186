@@ -222,16 +222,15 @@ let initwebRoutes = (app) => {
     "/api/get-product-recommend",
     productController.getProductRecommend
   );
-<<<<<<< HEAD
-=======
-//======tai=====
-router.post('/api/create-new-product-detail-image', productController.createNewProductDetailImage);
-router.post('/api/create-new-product-detail-size', productController.createNewProductDetailSize);
-router.get('/api/get-product-detail-by-id', productController.getProductDetailById); // API lấy chi tiết size/image
-router.put('/api/update-product-detail', productController.updateProductDetail);
-router.delete('/api/delete-product-detail-image', productController.deleteProductDetailImage);
-router.delete('/api/delete-product-detail-size', productController.deleteProductDetailSize);
->>>>>>> tai
+
+  //======tai=====
+  router.post('/api/create-new-product-detail-image', productController.createNewProductDetailImage);
+  router.post('/api/create-new-product-detail-size', productController.createNewProductDetailSize);
+  router.get('/api/get-product-detail-by-id', productController.getDetailProductDetailById); // API lấy chi tiết size/image
+  router.put('/api/update-product-detail', productController.updateProductDetail);
+  router.delete('/api/delete-product-detail-image', productController.deleteProductDetailImage);
+  router.delete('/api/delete-product-detail-size', productController.deleteProductDetailSize);
+
 
   //================= Tuan PayMent================================//
   router.post(
