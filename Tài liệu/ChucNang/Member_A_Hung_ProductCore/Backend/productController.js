@@ -313,17 +313,14 @@ let getProductRecommend = async (req, res) => {
         })
     }
 }
-
 module.exports = {
-    handleCreateNewProduct: createNewProduct,
+    createNewProduct: createNewProduct,
     getAllProductAdmin: getAllProductAdmin,
     getAllProductUser: getAllProductUser,
     UnactiveProduct: UnactiveProduct,
     ActiveProduct: ActiveProduct,
     getDetailProductById: getDetailProductById,
-    handleUpdateProduct: updateProduct,
-    handleDeleteProduct: (req, res) => res.status(501).json({ errCode: -1, errMessage: 'Not implemented' }),
-    getAllProduct: (req, res) => res.status(501).json({ errCode: -1, errMessage: 'Not implemented' }),
+    updateProduct: updateProduct,
     getAllProductDetailById: getAllProductDetailById,
     getAllProductDetailImageById: getAllProductDetailImageById,
     createNewProductDetail: createNewProductDetail,

@@ -9,15 +9,23 @@ import voucherController from "../controllers/voucherController";
 import commentController from "../controllers/commentController";
 import shopCartController from "../controllers/shopCartController";
 import orderController from "../controllers/orderController";
-import addressUserController from "../controllers/addressUserController";
+
 import messageController from "../controllers/messageController";
 import statisticController from "../controllers/statisticController";
 import middlewareControllers from "../middlewares/jwtVerify";
 import supplierController from "../controllers/supplierController";
 import receiptController from "../controllers/receiptController";
+import paymentController from "../controllers/paymentController";
 let router = express.Router();
 
+
 let initwebRoutes = (app) => {
+  //================= REVIEW ==================
+  router.post('/api/create-new-review', commentController.createNewReview);
+  router.get('/api/get-all-review-by-product-id', commentController.getAllReviewByProductId);
+  router.post('/api/reply-review', commentController.ReplyReview);
+  router.delete('/api/delete-review', commentController.deleteReview);
+
   router.get("/", (req, res) => {
     return res.send("hello");
   });
@@ -222,6 +230,9 @@ let initwebRoutes = (app) => {
     "/api/get-product-recommend",
     productController.getProductRecommend
   );
+  router.get("/api/get-product-feature", productController.getProductFeature);
+  router.get("/api/get-product-new", productController.getProductNew);
+  router.get("/api/get-product-shopcart", productController.getProductShopCart);
 
   //======tai=====
   router.post('/api/create-new-product-detail-image', productController.createNewProductDetailImage);

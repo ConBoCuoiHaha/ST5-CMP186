@@ -46,6 +46,22 @@ const checkPhonenumberEmail = (data) => {
 const getAllCodeService = (type) => {
     return axios.get(`/api/get-all-code?type=${type}`);
 };
+const createAllCodeService = (data) => {
+    return axios.post(`/api/create-new-allcode`, data);
+};
+const getDetailAllcodeById = (id) => {
+    return axios.get(`/api/get-detail-allcode?id=${id}`);
+};
+const UpdateAllcodeService = (data) => {
+    return axios.put(`/api/update-allcode`, data);
+};
+const DeleteAllcodeService = (id) => {
+    return axios.delete(`/api/delete-allcode`, {
+        data: {
+            id: id,
+        },
+    });
+};
 const getAllCategoryBlogService = (type) => {
     return axios.get(`/api/get-all-category-blog?type=${type}`);
 };
@@ -54,6 +70,12 @@ const getListAllCodeService = (data) => {
         `/api/get-list-allcode?type=${data.type}&limit=${data.limit}&offset=${data.offset}&keyword=${data.keyword}`
     );
 
+};
+//=================BANNER=========================//
+const createNewBannerService = (data) => {
+    return axios.post(`/api/create-new-banner`, data);
+};
+const updateBannerService = (data) => {
     return axios.put(`/api/update-banner`, data);
 };
 const deleteBannerService = (data) => {
@@ -270,22 +292,22 @@ const addShopCartService = (data) => {
 //     return axios.post(`/api/vnpay_return`, data)
 // }
 //=========================ADDRESS USER==============//
-// const createNewAddressUserrService = (data) => {
-//     return axios.post(`/api/create-new-address-user`, data)
-// }
-// const deleteAddressUserService = (data) => {
-//     return axios.delete(`/api/delete-address-user`, data)
-// }
-// const editAddressUserService = (data) => {
-//     return axios.put(`/api/edit-address-user`, data)
-// }
-// const getAllAddressUserByUserIdService = (userId) => {
-//     return axios.get(`/api/get-all-address-user?userId=${userId}`)
-// }
-// const getDetailAddressUserByIdService = (id) => {
-//     return axios.get(`/api/get-detail-address-user-by-id?id=${id}`)
+const createNewAddressUserService = (data) => {
+    return axios.post(`/api/create-new-address-user`, data)
+}
+const deleteAddressUserService = (data) => {
+    return axios.delete(`/api/delete-address-user`, data)
+}
+const editAddressUserService = (data) => {
+    return axios.put(`/api/edit-address-user`, data)
+}
+const getAllAddressUserByUserIdService = (userId) => {
+    return axios.get(`/api/get-all-address-user?userId=${userId}`)
+}
+const getDetailAddressUserByIdService = (id) => {
+    return axios.get(`/api/get-detail-address-user-by-id?id=${id}`)
 
-// }
+}
 //======================MESSSAGE==========================//
 const createNewRoom = (data) => {
     return axios.post(`/api/create-new-room`, data);
@@ -386,11 +408,37 @@ const getAllReceipt = (data) => {
 const createNewReceiptDetailService = (data) => {
     return axios.post(`/api/create-new-detail-receipt`, data);
 };
-//======================THIRTY SERVICE==========================//
+//=======================REVIEW==========================//
+const createNewReviewService = (data) => {
+    return axios.post(`/api/create-new-review`, data);
+};
+const getAllReviewByProductIdService = (id) => {
+    return axios.get(`/api/get-all-review-by-product-id?productId=${id}`);
+};
+const ReplyReviewService = (data) => {
+    return axios.post(`/api/reply-review`, data);
+};
+const deleteReviewService = (data) => {
+    return axios.delete(`/api/delete-review`, {
+        data: {
+            id: data.id,
+        },
+    });
+};
+//=======================THIRTY SERVICE==========================//
 const getExchangeRate = () => {
     return axios.get(
         `https://tygia.com/json.php?ran=0&gold=0&bank=VIETCOM&date=now`
     );
+};
+const getProductFeatureService = (limit) => {
+    return axios.get(`/api/get-product-feature?limit=${limit}`);
+};
+const getProductNewService = (limit) => {
+    return axios.get(`/api/get-product-new?limit=${limit}`);
+};
+const getProductShopcartService = (data) => {
+    return axios.get(`/api/get-product-shopcart?productIds=${data.productIds}`); // Assuming usage
 };
 export {
     getAllUsers,
@@ -456,7 +504,7 @@ export {
     addShopCartService,
     // getAllShopCartByUserIdService, deleteItemShopCartService,
     createNewOrderService,
-    createNewAddressUserrService,
+    createNewAddressUserService,
     getAllAddressUserByUserIdService,
     deleteAddressUserService,
     editAddressUserService,
