@@ -551,7 +551,6 @@ export {
     getAllReviewByProductIdService,
     ReplyReviewService,
     deleteReviewService,
-    getProductFeatureService, getProductNewService,
     saveUserVoucherService,
     getAllVoucherByUserIdService,
     addShopCartService,
