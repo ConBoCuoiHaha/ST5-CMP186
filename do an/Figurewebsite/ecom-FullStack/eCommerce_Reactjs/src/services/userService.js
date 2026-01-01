@@ -194,6 +194,8 @@ const getAllProductUser = (limit, offset, categoryId, brandId, keyword) => {
 const updateProductService = (data) => {
     return axios.put("/api/update-product", data);
 };
+const CreateNewProduct = createNewProductService;
+const UpdateProductService = updateProductService;
 const deleteProductService = (data) => {
     return axios.delete("/api/delete-product", {
         data: {
@@ -292,7 +294,7 @@ const addShopCartService = (data) => {
 //     return axios.post(`/api/vnpay_return`, data)
 // }
 //=========================ADDRESS USER==============//
-const createNewAddressUserService = (data) => {
+const createNewAddressUserrService = (data) => {
     return axios.post(`/api/create-new-address-user`, data)
 }
 const deleteAddressUserService = (data) => {
@@ -425,6 +427,57 @@ const deleteReviewService = (data) => {
         },
     });
 };
+const getAllProductDetailByIdService = (data) => {
+    return axios.get(`/api/get-product-detail-by-id?id=${data.id}&limit=${data.limit}&offset=${data.offset}`);
+}
+const CreateNewProductDetailService = (data) => {
+    return axios.post(`/api/create-new-product-detail`, data);
+}
+const UpdateProductDetailService = (data) => {
+    return axios.put(`/api/update-product-detail`, data);
+}
+const DeleteProductDetailService = (data) => {
+    return axios.delete(`/api/delete-product-detail`, { data: { id: data.id } });
+}
+const createNewProductImageService = (data) => {
+    return axios.post(`/api/create-new-product-detail-image`, data);
+}
+const getAllProductDetailImageByIdService = (data) => {
+    return axios.get(`/api/get-product-detail-image-by-id?id=${data.id}&limit=${data.limit}&offset=${data.offset}`);
+}
+const UpdateProductDetailImageService = (data) => {
+    return axios.put(`/api/update-product-detail-image`, data);
+}
+const DeleteProductDetailImageService = (data) => {
+    return axios.delete(`/api/delete-product-detail-image`, { data: { id: data.id } });
+}
+const getProductDetailImageByIdService = (id) => {
+    return axios.get(`/api/get-product-detail-image-by-id?id=${id}`);
+}
+const getAllProductDetailSizeByIdService = (data) => {
+    return axios.get(`/api/get-product-detail-size-by-id?id=${data.id}&limit=${data.limit}&offset=${data.offset}`);
+}
+const createNewProductSizeService = (data) => {
+    return axios.post(`/api/create-new-product-detail-size`, data);
+}
+const UpdateProductDetailSizeService = (data) => {
+    return axios.put(`/api/update-product-detail-size`, data);
+}
+const DeleteProductDetailSizeService = (data) => {
+    return axios.delete(`/api/delete-product-detail-size`, { data: { id: data.id } });
+}
+const getProductDetailSizeByIdService = (id) => {
+    return axios.get(`/api/get-product-detail-size-by-id?id=${id}`);
+}
+const getProductDetailByIdService = (id) => {
+    return axios.get(`/api/get-product-detail-by-id?id=${id}`);
+}
+const getAllShopCartByUserIdService = (id) => {
+    return axios.get(`/api/get-all-shopcart-by-userId?id=${id}`);
+}
+const deleteItemShopCartService = (data) => {
+    return axios.delete(`/api/delete-item-shopcart`, { data: data });
+}
 //=======================THIRTY SERVICE==========================//
 const getExchangeRate = () => {
     return axios.get(
@@ -462,9 +515,9 @@ export {
     handleActiveProductService,
     getDetailProductByIdService,
     updateProductService,
-    // getAllProductDetailByIdService, getAllProductDetailImageByIdService, CreateNewProductDetailService,
-    // getProductDetailByIdService, UpdateProductDetailService, createNewProductImageService, getProductDetailImageByIdService,
-    // UpdateProductDetailImageService, DeleteProductDetailImageService, DeleteProductDetailService,
+    getAllProductDetailByIdService, getAllProductDetailImageByIdService, CreateNewProductDetailService,
+    getProductDetailByIdService, UpdateProductDetailService, createNewProductImageService, getProductDetailImageByIdService,
+    UpdateProductDetailImageService, DeleteProductDetailImageService, DeleteProductDetailService,
     createNewBannerService,
     updateBannerService,
     deleteBannerService,
@@ -492,19 +545,19 @@ export {
     getDetailVoucherByIdService,
     getAllVoucher,
     getSelectTypeVoucher,
-    // getAllProductDetailSizeByIdService, createNewProductSizeService, getProductDetailSizeByIdService, UpdateProductDetailSizeService,
-    // DeleteProductDetailSizeService,
+    getAllProductDetailSizeByIdService, createNewProductSizeService, getProductDetailSizeByIdService, UpdateProductDetailSizeService,
+    DeleteProductDetailSizeService,
     createNewReviewService,
     getAllReviewByProductIdService,
     ReplyReviewService,
     deleteReviewService,
-    // getProductFeatureService, getProductNewService,
+    getProductFeatureService, getProductNewService,
     saveUserVoucherService,
     getAllVoucherByUserIdService,
     addShopCartService,
-    // getAllShopCartByUserIdService, deleteItemShopCartService,
+    getAllShopCartByUserIdService, deleteItemShopCartService,
     createNewOrderService,
-    createNewAddressUserService,
+    createNewAddressUserrService,
     getAllAddressUserByUserIdService,
     deleteAddressUserService,
     editAddressUserService,
@@ -560,4 +613,6 @@ export {
     getExchangeRate,
     deleteProductService,
     createPaymentLink,
+    CreateNewProduct,
+    UpdateProductService,
 };
