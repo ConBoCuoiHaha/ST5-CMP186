@@ -16,6 +16,7 @@ import middlewareControllers from "../middlewares/jwtVerify";
 import supplierController from "../controllers/supplierController";
 import receiptController from "../controllers/receiptController";
 import paymentController from "../controllers/paymentController";
+import addressUserController from "../controllers/addressUserController";
 let router = express.Router();
 
 
@@ -242,6 +243,13 @@ let initwebRoutes = (app) => {
   router.delete('/api/delete-product-detail-image', productController.deleteProductDetailImage);
   router.delete('/api/delete-product-detail-size', productController.deleteProductDetailSize);
 
+
+  //=================API ADDRESS USER=========================//
+  router.post('/api/create-new-address-user', middlewareControllers.verifyTokenUser, addressUserController.createNewAddressUser);
+  router.get('/api/get-all-address-user', middlewareControllers.verifyTokenUser, addressUserController.getAllAddressUserByUserId);
+  router.delete('/api/delete-address-user', middlewareControllers.verifyTokenUser, addressUserController.deleteAddressUser);
+  router.put('/api/edit-address-user', middlewareControllers.verifyTokenUser, addressUserController.editAddressUser);
+  router.get('/api/get-detail-address-user-by-id', middlewareControllers.verifyTokenUser, addressUserController.getDetailAddressUserById);
 
   //================= Tuan PayMent================================//
   router.post(

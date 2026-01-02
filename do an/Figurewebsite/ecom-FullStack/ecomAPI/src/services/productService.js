@@ -954,11 +954,17 @@ let getProductFeature = (limit) => {
                 for (let j = 0; j < res[i].productDetail.length; j++) {
                     res[i].productDetail[j].productDetailSize = await db.ProductDetailSize.findAll({ where: { productdetailId: res[i].productDetail[j].id }, raw: true })
 
-                    res[i].price = res[i].productDetail[0].discountPrice
-                    res[i].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: res[i].productDetail[j].id }, raw: true })
-                    for (let k = 0; k < res[i].productDetail[j].productImage.length > 0; k++) {
-                        res[i].productDetail[j].productImage[k].image = new Buffer(res[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                    if (res[i].productDetail[j]) {
+                        res[i].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: res[i].productDetail[j].id }, raw: true })
+                        for (let k = 0; k < res[i].productDetail[j].productImage.length; k++) {
+                            res[i].productDetail[j].productImage[k].image = new Buffer(res[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                        }
                     }
+                }
+                if (res[i].productDetail && res[i].productDetail.length > 0) {
+                    res[i].price = res[i].productDetail[0].discountPrice
+                } else {
+                    res[i].price = 0
                 }
             }
             resolve({
@@ -996,11 +1002,17 @@ let getProductNew = (limit) => {
                 for (let j = 0; j < res[i].productDetail.length; j++) {
                     res[i].productDetail[j].productDetailSize = await db.ProductDetailSize.findAll({ where: { productdetailId: res[i].productDetail[j].id }, raw: true })
 
-                    res[i].price = res[i].productDetail[0].discountPrice
-                    res[i].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: res[i].productDetail[j].id }, raw: true })
-                    for (let k = 0; k < res[i].productDetail[j].productImage.length > 0; k++) {
-                        res[i].productDetail[j].productImage[k].image = new Buffer(res[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                    if (res[i].productDetail[j]) {
+                        res[i].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: res[i].productDetail[j].id }, raw: true })
+                        for (let k = 0; k < res[i].productDetail[j].productImage.length; k++) {
+                            res[i].productDetail[j].productImage[k].image = new Buffer(res[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                        }
                     }
+                }
+                if (res[i].productDetail && res[i].productDetail.length > 0) {
+                    res[i].price = res[i].productDetail[0].discountPrice
+                } else {
+                    res[i].price = 0
                 }
             }
             resolve({
