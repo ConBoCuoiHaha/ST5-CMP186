@@ -118,13 +118,20 @@ let getAllProductAdmin = (data) => {
                 for (let j = 0; j < res.rows[i].productDetail.length; j++) {
                     res.rows[i].productDetail[j].productDetailSize = await db.ProductDetailSize.findAll({ where: { productdetailId: res.rows[i].productDetail[j].id }, raw: true })
 
-                    res.rows[i].price = res.rows[i].productDetail[0].discountPrice
-                    res.rows[i].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: res.rows[i].productDetail[j].id }, raw: true })
-                    for (let k = 0; k < res.rows[i].productDetail[j].productImage.length > 0; k++) {
-                        res.rows[i].productDetail[j].productImage[k].image = new Buffer(res.rows[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                    if (res.rows[i].productDetail[j]) {
+                        res.rows[i].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: res.rows[i].productDetail[j].id }, raw: true })
+                        for (let k = 0; k < res.rows[i].productDetail[j].productImage.length; k++) {
+                            res.rows[i].productDetail[j].productImage[k].image = new Buffer(res.rows[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                        }
                     }
                 }
+                if (res.rows[i].productDetail && res.rows[i].productDetail.length > 0) {
+                    res.rows[i].price = res.rows[i].productDetail[0].discountPrice
+                } else {
+                    res.rows[i].price = 0
+                }
             }
+
             if (data.sortPrice && data.sortPrice === "true") {
 
                 res.rows.sort(dynamicSortMultiple("price"))
@@ -176,13 +183,20 @@ let getAllProductUser = (data) => {
                 for (let j = 0; j < res.rows[i].productDetail.length; j++) {
                     res.rows[i].productDetail[j].productDetailSize = await db.ProductDetailSize.findAll({ where: { productdetailId: res.rows[i].productDetail[j].id }, raw: true })
 
-                    res.rows[i].price = res.rows[i].productDetail[0].discountPrice
-                    res.rows[i].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: res.rows[i].productDetail[j].id }, raw: true })
-                    for (let k = 0; k < res.rows[i].productDetail[j].productImage.length > 0; k++) {
-                        res.rows[i].productDetail[j].productImage[k].image = new Buffer(res.rows[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                    if (res.rows[i].productDetail[j]) {
+                        res.rows[i].productDetail[j].productImage = await db.ProductImage.findAll({ where: { productdetailId: res.rows[i].productDetail[j].id }, raw: true })
+                        for (let k = 0; k < res.rows[i].productDetail[j].productImage.length; k++) {
+                            res.rows[i].productDetail[j].productImage[k].image = new Buffer(res.rows[i].productDetail[j].productImage[k].image, 'base64').toString('binary')
+                        }
                     }
                 }
+                if (res.rows[i].productDetail && res.rows[i].productDetail.length > 0) {
+                    res.rows[i].price = res.rows[i].productDetail[0].discountPrice
+                } else {
+                    res.rows[i].price = 0
+                }
             }
+
             if (data.sortPrice && data.sortPrice === "true") {
 
                 res.rows.sort(dynamicSortMultiple("price"))
