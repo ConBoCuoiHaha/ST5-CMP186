@@ -29,3 +29,6 @@ yarn-error.log*
 *.swo
 *.bin/
 *.obj/
+
+# Ignored Folders
+Doan_TuanKhoi-main (1)/
