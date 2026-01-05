@@ -18,7 +18,7 @@ const ManageProduct = () => {
 
     const [dataProduct, setdataProduct] = useState([])
     const [count, setCount] = useState(0)
-    const [numberPage, setnumberPage] = useState('')
+    const [numberPage, setnumberPage] = useState(0)
     const [keyword, setkeyword] = useState('')
     useEffect(() => {
 
@@ -28,17 +28,7 @@ const ManageProduct = () => {
         fetchProduct()
     }, [])
     let loadProduct = async (keyword) => {
-        let arrData = await getAllProductAdmin({
-
-            sortName: '',
-            sortPrice: '',
-            categoryId: 'ALL',
-            brandId: 'ALL',
-            limit: PAGINATION.pagerow,
-            offset: 0,
-            keyword: keyword
-
-        })
+        let arrData = await getAllProductAdmin(PAGINATION.pagerow, PAGINATION.pagerow * numberPage, keyword, 'ALL', 'ALL')
         if (arrData && arrData.errCode === 0) {
             setdataProduct(arrData.data)
             setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
@@ -51,21 +41,7 @@ const ManageProduct = () => {
         })
         if (data && data.errCode === 0) {
             toast.success("Ẩn sản phẩm thành công!")
-            let arrData = await getAllProductAdmin({
-
-                sortName: '',
-                sortPrice: '',
-                categoryId: 'ALL',
-                brandId: 'ALL',
-                keyword: '',
-                limit: PAGINATION.pagerow,
-                offset: numberPage * PAGINATION.pagerow
-
-            })
-            if (arrData && arrData.errCode === 0) {
-                setdataProduct(arrData.data)
-                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
-            }
+            loadProduct('')
         } else {
             toast.error("Ẩn sản phẩm thất bại!")
         }
@@ -84,15 +60,7 @@ const ManageProduct = () => {
     }
     let handleChangePage = async (number) => {
         setnumberPage(number.selected)
-        let arrData = await getAllProductAdmin({
-            limit: PAGINATION.pagerow,
-            offset: number.selected * PAGINATION.pagerow,
-            sortName: '',
-            sortPrice: '',
-            categoryId: 'ALL',
-            brandId: 'ALL',
-            keyword: keyword
-        })
+        let arrData = await getAllProductAdmin(PAGINATION.pagerow, number.selected * PAGINATION.pagerow, keyword, 'ALL', 'ALL')
         if (arrData && arrData.errCode === 0) {
             setdataProduct(arrData.data)
 
@@ -110,15 +78,7 @@ const ManageProduct = () => {
 
     }
     let handleOnClickExport = async () => {
-        let res = await getAllProductAdmin({
-            sortName: '',
-            sortPrice: '',
-            categoryId: 'ALL',
-            brandId: 'ALL',
-            keyword: '',
-            limit: '',
-            offset: ''
-        })
+        let res = await getAllProductAdmin('', '', '', 'ALL', 'ALL')
         if (res && res.errCode === 0) {
             await CommonUtils.exportExcel(res.data, "Danh sách sản phẩm", "ListProduct")
         }

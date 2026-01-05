@@ -88,6 +88,51 @@ let initwebRoutes = (app) => {
     middlewareControllers.verifyTokenAdmin,
     allcodeController.handleUpdateAllCode
   );
+  router.get('/api/get-all-code', allcodeController.getAllCodeService);
+  router.get('/api/get-list-allcode', allcodeController.getListAllCodeService);
+  router.get('/api/get-detail-all-code', allcodeController.getDetailAllCodeById);
+  router.delete('/api/delete-all-code', middlewareControllers.verifyTokenAdmin, allcodeController.handleDeleteAllCode);
+  router.get('/api/get-all-category-blog', allcodeController.getAllCategoryBlog);
+
+  //==================API BANNER============================//
+  router.post('/api/create-new-banner', middlewareControllers.verifyTokenAdmin, bannerController.createNewBanner);
+  router.get('/api/get-detail-banner', bannerController.getDetailBanner);
+  router.get('/api/get-all-banner', bannerController.getAllBanner);
+  router.put('/api/update-banner', middlewareControllers.verifyTokenAdmin, bannerController.updateBanner);
+  router.delete('/api/delete-banner', middlewareControllers.verifyTokenAdmin, bannerController.deleteBanner);
+
+  //==================API BLOG==============================//
+  router.post('/api/create-new-blog', middlewareControllers.verifyTokenAdmin, blogController.createNewBlog);
+  router.get('/api/get-detail-blog', blogController.getDetailBlogById);
+  router.get('/api/get-all-blog', blogController.getAllBlog);
+  router.put('/api/update-blog', middlewareControllers.verifyTokenAdmin, blogController.updateBlog);
+  router.delete('/api/delete-blog', middlewareControllers.verifyTokenAdmin, blogController.deleteBlog);
+  router.get('/api/get-feature-blog', blogController.getFeatureBlog);
+  router.get('/api/get-new-blog', blogController.getNewBlog);
+
+  //==================API TYPESHIP==========================//
+  router.post('/api/create-new-typeship', middlewareControllers.verifyTokenAdmin, typeshipController.createNewTypeShip);
+  router.get('/api/get-detail-typeship', typeshipController.getDetailTypeshipById);
+  router.get('/api/get-all-typeship', typeshipController.getAllTypeship);
+  router.put('/api/update-typeship', middlewareControllers.verifyTokenAdmin, typeshipController.updateTypeship);
+  router.delete('/api/delete-typeship', middlewareControllers.verifyTokenAdmin, typeshipController.deleteTypeship);
+
+  //==================API TYPE VOUCHER======================//
+  router.post('/api/create-new-typevoucher', middlewareControllers.verifyTokenAdmin, voucherController.createNewTypeVoucher);
+  router.get('/api/get-detail-typevoucher', voucherController.getDetailTypeVoucherById);
+  router.get('/api/get-all-typevoucher', voucherController.getAllTypeVoucher);
+  router.put('/api/update-typevoucher', middlewareControllers.verifyTokenAdmin, voucherController.updateTypeVoucher);
+  router.delete('/api/delete-typevoucher', middlewareControllers.verifyTokenAdmin, voucherController.deleteTypeVoucher);
+  router.get('/api/get-select-typevoucher', voucherController.getSelectTypeVoucher);
+
+  //==================API VOUCHER===========================//
+  router.post('/api/create-new-voucher', middlewareControllers.verifyTokenAdmin, voucherController.createNewVoucher);
+  router.get('/api/get-detail-voucher', voucherController.getDetailVoucherById);
+  router.get('/api/get-all-voucher', voucherController.getAllVoucher);
+  router.put('/api/update-voucher', middlewareControllers.verifyTokenAdmin, voucherController.updateVoucher);
+  router.delete('/api/delete-voucher', middlewareControllers.verifyTokenAdmin, voucherController.deleteVoucher);
+  router.post('/api/save-user-voucher', middlewareControllers.verifyTokenUser, voucherController.saveUserVoucher);
+  router.get('/api/get-all-voucher-by-userid', middlewareControllers.verifyTokenUser, voucherController.getAllVoucherByUserId);
   //==================API COMMENT============================//
   router.post(
     "/api/create-new-comment",

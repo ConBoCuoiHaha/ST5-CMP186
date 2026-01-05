@@ -25,7 +25,7 @@ function HomePage(props) {
     }
 
     useEffect(() => {
-        
+
         fetchBlogFeature()
         fetchDataBrand()
         fetchProductFeature()
@@ -67,7 +67,7 @@ function HomePage(props) {
                 {dataBanner && dataBanner.length > 0 &&
                     dataBanner.map((item, index) => {
                         return (
-                            <HomeBanner image={item.image} name={item.name}></HomeBanner>
+                            <HomeBanner key={index} image={item.image} name={item.name}></HomeBanner>
                         )
                     })
                 }

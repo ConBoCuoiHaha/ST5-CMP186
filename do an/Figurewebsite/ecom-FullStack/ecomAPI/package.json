@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec ./node_modules/.bin/babel-node src/server.js"
+    "start": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 nodemon --exec ./node_modules/.bin/babel-node src/server.js"
   },
   "keywords": [
     "fullstack",
@@ -44,6 +44,7 @@
     "@babel/core": "^7.12.10",
     "@babel/node": "^7.12.10",
     "@babel/preset-env": "^7.12.10",
+    "cross-env": "^10.1.0",
     "nodemon": "^2.0.7",
     "sequelize-cli": "^6.2.0"
   }
