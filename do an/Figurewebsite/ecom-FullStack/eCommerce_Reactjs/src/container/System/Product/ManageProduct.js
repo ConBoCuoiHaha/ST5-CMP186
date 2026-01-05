@@ -170,18 +170,18 @@ const ManageProduct = () => {
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
                                                 <td>{item.name}</td>
-                                                <td>{item.categoryData.value}</td>
-                                                <td>{item.brandData.value}</td>
+                                                <td>{item.categoryData?.value}</td>
+                                                <td>{item.brandData?.value}</td>
                                                 <td>{item.material}</td>
                                                 <td>{item.madeby}</td>
                                                 <td>{item.view ? item.view : 0}</td>
-                                                <td>{item.statusData.value}</td>
+                                                <td>{item.statusData?.value}</td>
                                                 <td style={{ width: '12%' }}>
                                                     <Link to={`/admin/list-product-detail/${item.id}`}>View</Link>
                                                     &nbsp; &nbsp;
                                                     <Link to={`/admin/edit-product/${item.id}`}>Edit</Link>
                                                     &nbsp; &nbsp;
-                                                    {item.statusData.code === 'S1' ?
+                                                    {item.statusData?.code === 'S1' ?
                                                         <span onClick={() => handleBanProduct(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }} >Ban</span>
                                                         : <span onClick={() => handleActiveProduct(item.id)} style={{ color: '#0E6DFE', cursor: 'pointer' }}   >Active</span>
                                                     }

@@ -3,10 +3,12 @@ const { Sequelize } = require('sequelize');
 
 // Option 2: Passing parameters separately (other dialects)
 const sequelize = new Sequelize('ecom', 'root', null, {
-    host: 'localhost',
+    host: '127.0.0.1',
     dialect: 'mysql',
     logging: false,
-
+    dialectOptions: {
+        connectTimeout: 30000
+    }
 });
 
 let connectDB = async () => {
