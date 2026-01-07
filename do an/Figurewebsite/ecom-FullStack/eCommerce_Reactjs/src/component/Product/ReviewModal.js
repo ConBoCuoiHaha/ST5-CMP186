@@ -1,6 +1,20 @@
 import React from 'react';
-import { useState } from 'react';
-import { Modal, ModalFooter, ModalBody, Button } from 'reactstrap';
+import { useEffect, useState } from 'react';
+import CommonUtils from '../../utils/CommonUtils';
+import moment from 'moment';
+import { toast } from 'react-toastify';
+
+
+import { Modal, ModalHeader, ModalFooter, ModalBody, Button } from 'reactstrap';
+
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect,
+    useParams
+} from "react-router-dom";
 
 
 
@@ -17,11 +31,11 @@ const ReviewModal = (props) => {
     };
     let handleCloseModal = () => {
         props.closeModal()
-        setInputValues({ ...inputValues, content: '' })
+        setInputValues({ ...inputValues, ["content"]: '' })
 
     }
     let handleSaveInfor = () => {
-        setInputValues({ ...inputValues, content: '' })
+        setInputValues({ ...inputValues, ["content"]: '' })
         props.sendDataFromReViewModal(inputValues.content)
     }
     return (

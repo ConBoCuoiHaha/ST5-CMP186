@@ -8,61 +8,101 @@ function MainShop(props) {
 
     const [dataProduct, setdataProduct] = useState([])
     const [count, setCount] = useState('')
+    const [numberPage, setnumberPage] = useState('')
     const [limitPage, setlimitPage] = useState(PAGINATION.pagerow)
     const [sortPrice, setsortPrice] = useState('')
     const [sortName, setsortName] = useState('')
     const [offset, setoffset] = useState(0)
+    const [categoryId, setcategoryId] = useState('')
+    const [brandId, setbrandId] = useState('')
     const [keyword, setkeyword] = useState('')
-
     useEffect(() => {
-        const fetchData = async () => {
+
+      
+         loadProduct(limitPage, sortName, sortPrice, offset, categoryId,keyword)
+    
+    }, [])
+    useEffect(() => {
+        setcategoryId(props.categoryId)
+        setbrandId(props.brandId)
+        let fetchCategory = async () => {
+
             let arrData = await getAllProductUser({
+
                 sortPrice: sortPrice,
                 sortName: sortName,
                 limit: limitPage,
                 offset: offset,
                 categoryId: props.categoryId,
                 brandId: props.brandId,
-                keyword: keyword
-            });
+                 keyword:keyword
+            })
             if (arrData && arrData.errCode === 0) {
-                setdataProduct(arrData.data);
-                setCount(Math.ceil(arrData.count / limitPage));
+                setdataProduct(arrData.data)
+                setCount(Math.ceil(arrData.count / limitPage))
             }
-        };
-        fetchData();
-    }, [sortPrice, sortName, limitPage, offset, props.categoryId, props.brandId, keyword]);
+        }
+        fetchCategory()
 
-    let handleSelectLimitPage = async (event) => {
-        setlimitPage(event.target.value);
-        setoffset(0); // Reset to first page
-    }
-    let handleChangePage = async (number) => {
-        setoffset(number.selected * limitPage);
-        props.myRef.current.scrollIntoView();
-    }
-    let handleSelectSort = async (event) => {
-        let value = +event.target.value;
-        setoffset(0); // Reset to first page
-        if (value === 1) {
-            setsortPrice('');
-            setsortName('');
-        } else if (value === 2) {
-            setsortPrice(true);
-            setsortName('');
-        } else if (value === 3) {
-            setsortPrice('');
-            setsortName(true);
+    }, [props.categoryId, props.brandId])
+
+
+    let loadProduct = async (limitPage, sortName, sortPrice, offset, categoryId,keyword) => {
+        let arrData = await getAllProductUser({
+
+            sortPrice: sortPrice,
+            sortName: sortName,
+            limit: limitPage,
+            offset: offset,
+            categoryId: categoryId,
+            brandId: brandId,
+            keyword:keyword
+
+        })
+        if (arrData && arrData.errCode === 0) {
+            setdataProduct(arrData.data)
+            setCount(Math.ceil(arrData.count / limitPage))
         }
     }
-    let handleSearch = (keyword) => {
-        setoffset(0); // Reset to first page
-        setkeyword(keyword);
+    let handleSelectLimitPage = async (event) => {
+
+         setlimitPage(event.target.value)
+         loadProduct(event.target.value, sortName, sortPrice, offset, categoryId,keyword)
     }
-    let handleOnchangeSearch = (keyword) => {
-        if (keyword === '') {
-            setoffset(0); // Reset to first page
-            setkeyword(keyword);
+    let handleChangePage = async (number) => {
+        setnumberPage(number.selected)
+        loadProduct(limitPage, sortName, sortPrice, number.selected * limitPage, categoryId,keyword)
+        setoffset(number.selected * limitPage)
+        props.myRef.current.scrollIntoView()
+
+    }
+    let handleSelectSort = async (event) => {
+        let value = +event.target.value
+
+        if (value === 1) {
+            loadProduct(limitPage, '', '', offset, categoryId,keyword)
+
+        }
+        else if (value === 2) {
+            loadProduct(limitPage, '', true, offset, categoryId,keyword)
+            setsortPrice(true)
+            setsortName('')
+        }
+        else if (value === 3) {
+            loadProduct(limitPage, true, '', offset, categoryId,keyword)
+            setsortPrice('')
+            setsortName(true)
+        }
+    }
+    let handleSearch = (keyword) =>{
+       
+        loadProduct(limitPage, sortName, sortPrice, offset, categoryId,keyword)
+        setkeyword(keyword)
+    }
+    let handleOnchangeSearch = (keyword) =>{
+        if(keyword === ''){
+            loadProduct(limitPage, sortName, sortPrice, offset, categoryId,keyword)
+            setkeyword(keyword)
         }
     }
     return (

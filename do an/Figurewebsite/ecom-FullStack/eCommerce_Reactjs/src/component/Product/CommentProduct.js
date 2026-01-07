@@ -13,7 +13,7 @@ function CommentProduct(props) {
                             <div className="media-body">
                                 <h4>Blake Ruiz</h4>
                                 <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                <button className="reply_btn">Phản hồi</button>
+                                <a className="reply_btn" href="#">Phản hồi</a>
                             </div>
                         </div>
                         <p>
@@ -31,7 +31,7 @@ function CommentProduct(props) {
                             <div className="media-body">
                                 <h4>Blake Ruiz</h4>
                                 <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                <button className="reply_btn">Phản hồi</button>
+                                <a className="reply_btn" href="#">Phản hồi</a>
                             </div>
                         </div>
                         <p>
@@ -49,7 +49,7 @@ function CommentProduct(props) {
                             <div className="media-body">
                                 <h4>Blake Ruiz</h4>
                                 <h5>12th Feb, 2017 at 05:56 pm</h5>
-                                <button className="reply_btn">Phản hồi</button>
+                                <a className="reply_btn" href="#">Phản hồi</a>
                             </div>
                         </div>
                         <p>

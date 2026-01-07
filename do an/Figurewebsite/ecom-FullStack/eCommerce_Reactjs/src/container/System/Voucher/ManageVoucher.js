@@ -17,7 +17,7 @@ import {
 const ManageVoucher = () => {
 
     const [dataVoucher, setdataVoucher] = useState([])
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState('')
     const [numberPage, setnumberPage] = useState('')
     useEffect(() => {
         try {
@@ -30,7 +30,7 @@ const ManageVoucher = () => {
                 })
                 if (arrData && arrData.errCode === 0) {
                     setdataVoucher(arrData.data)
-                    setCount(arrData.count ? Math.ceil(arrData.count / PAGINATION.pagerow) : 0)
+                    setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
                 }
             }
             fetchData();
@@ -55,7 +55,7 @@ const ManageVoucher = () => {
             })
             if (arrData && arrData.errCode === 0) {
                 setdataVoucher(arrData.data)
-                setCount(arrData.count ? Math.ceil(arrData.count / PAGINATION.pagerow) : 0)
+                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
             }
 
         } else toast.error("Xóa mã voucher thất bại")
@@ -102,11 +102,11 @@ const ManageVoucher = () => {
                 <div className='row'>
                    
                     <div className='col-12 mb-2'>
-                    <button  style={{float:'right'}} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                    <button  style={{float:'right'}} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i class="fa-solid fa-file-excel"></i></button>
                     </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>STT</th>

@@ -148,16 +148,16 @@ const Adduser = (props) => {
                         </div>
                         <div className="form-row">
                             <div className="form-group col-4">
-                                <label htmlFor="inputFirstName">Họ</label>
-                                <input type="text" value={inputValues.firstName} name="firstName" onChange={(event) => handleOnChange(event)} className="form-control" id="inputFirstName" />
+                                <label htmlFor="inputEmail4">Họ</label>
+                                <input type="text" value={inputValues.firstName} name="firstName" onChange={(event) => handleOnChange(event)} className="form-control" id="inputEmail4" />
                             </div>
                             <div className="form-group col-4">
-                                <label htmlFor="inputLastName">Tên</label>
-                                <input type="text" value={inputValues.lastName} name="lastName" onChange={(event) => handleOnChange(event)} className="form-control" id="inputLastName" />
+                                <label htmlFor="inputEmail4">Tên</label>
+                                <input type="text" value={inputValues.lastName} name="lastName" onChange={(event) => handleOnChange(event)} className="form-control" id="inputEmail4" />
                             </div>
                             <div className="form-group col-4">
-                                <label htmlFor="inputPhoneNumber">Số điện thoại</label>
-                                <input type="text" value={inputValues.phonenumber} name="phonenumber" onChange={(event) => handleOnChange(event)} className="form-control" id="inputPhoneNumber" />
+                                <label htmlFor="inputEmail4">Số điện thoại</label>
+                                <input type="text" value={inputValues.phonenumber} name="phonenumber" onChange={(event) => handleOnChange(event)} className="form-control" id="inputEmail4" />
                             </div>
                         </div>
 
@@ -187,8 +187,8 @@ const Adduser = (props) => {
                                 </select>
                             </div>
                             <div className="form-group col-md-4">
-                                <label htmlFor="inputRole">Quyền</label>
-                                <select value={inputValues.roleId} name="roleId" onChange={(event) => handleOnChange(event)} id="inputRole" className="form-control">
+                                <label htmlFor="inputZip">Quyền</label>
+                                <select value={inputValues.roleId} name="roleId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
                                     {dataRole && dataRole.length > 0 &&
                                         dataRole.map((item, index) => {
                                             return (

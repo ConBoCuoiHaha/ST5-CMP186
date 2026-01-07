@@ -99,20 +99,20 @@ const AddSupplier = (props) => {
                     <form>
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label htmlFor="name">Tên nhà cung cấp</label>
-                                <input type="text" value={inputValues.name} name="name" onChange={(event) => handleOnChange(event)} className="form-control" id="name" />
+                                <label htmlFor="inputEmail4">Tên nhà cung cấp</label>
+                                <input type="text" value={inputValues.name} name="name" onChange={(event) => handleOnChange(event)} className="form-control" id="inputEmail4" />
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="email">Địa chỉ email</label>
-                                <input type="text" value={inputValues.email} name="email" onChange={(event) => handleOnChange(event)} className="form-control" id="email" />
+                                <label htmlFor="inputPassword4">Địa chỉ email</label>
+                                <input type="text" value={inputValues.email} name="email" onChange={(event) => handleOnChange(event)} className="form-control" id="inputPassword4" />
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="address">Địa chỉ</label>
-                                <input type="text" value={inputValues.address} name="address" onChange={(event) => handleOnChange(event)} className="form-control" id="address" />
+                                <label htmlFor="inputEmail4">Địa chỉ</label>
+                                <input type="text" value={inputValues.address} name="address" onChange={(event) => handleOnChange(event)} className="form-control" id="inputEmail4" />
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="phonenumber">Số điện thoại</label>
-                                <input type="text" value={inputValues.phonenumber} name="phonenumber" onChange={(event) => handleOnChange(event)} className="form-control" id="phonenumber" />
+                                <label htmlFor="inputPassword4">Số điện thoại</label>
+                                <input type="text" value={inputValues.phonenumber} name="phonenumber" onChange={(event) => handleOnChange(event)} className="form-control" id="inputPassword4" />
                             </div>
                         </div>
                         <button type="button" onClick={() => handleSaveSupplier()} className="btn btn-primary">Lưu thông tin</button>

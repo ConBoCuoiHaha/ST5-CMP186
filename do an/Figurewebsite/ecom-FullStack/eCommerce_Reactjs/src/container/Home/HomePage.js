@@ -4,7 +4,7 @@ import MainFeature from "../../component/HomeFeature/MainFeature";
 import ProductFeature from "../../component/HomeFeature/ProductFeature";
 import NewProductFeature from "../../component/HomeFeature/NewProductFeature"
 import HomeBlog from '../../component/HomeFeature/HomeBlog';
-import { getAllBanner, getProductFeatureService, getProductNewService, getNewBlog } from '../../services/userService';
+import { getAllBanner, getProductFeatureService, getProductNewService, getNewBlog, getProductRecommendService } from '../../services/userService';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -13,6 +13,7 @@ function HomePage(props) {
     const [dataNewProductFeature, setNewProductFeature] = useState([])
     const [dataNewBlog, setdataNewBlog] = useState([])
     const [dataBanner, setdataBanner] = useState([])
+    const [dataProductRecommend, setdataProductRecommend] = useState([])
     let settings = {
         dots: false,
         Infinity: false,
@@ -25,7 +26,11 @@ function HomePage(props) {
     }
 
     useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (userData) {
+            fetchProductRecommend(userData.id)
 
+        }
         fetchBlogFeature()
         fetchDataBrand()
         fetchProductFeature()
@@ -43,6 +48,15 @@ function HomePage(props) {
         let res = await getProductFeatureService(6)
         if (res && res.errCode === 0) {
             setDataProductFeature(res.data)
+        }
+    }
+    let fetchProductRecommend = async (userId) => {
+        let res = await getProductRecommendService({
+            limit: 20,
+            userId: userId
+        })
+        if (res && res.errCode === 0) {
+            setdataProductRecommend(res.data)
         }
     }
     let fetchDataBrand = async () => {
@@ -67,7 +81,7 @@ function HomePage(props) {
                 {dataBanner && dataBanner.length > 0 &&
                     dataBanner.map((item, index) => {
                         return (
-                            <HomeBanner key={index} image={item.image} name={item.name}></HomeBanner>
+                            <HomeBanner image={item.image} name={item.name}></HomeBanner>
                         )
                     })
                 }

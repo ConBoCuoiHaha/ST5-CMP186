@@ -15,7 +15,7 @@ function CommentBlog(props) {
                         <div className="d-flex justify-content-between">
                             <div className="d-flex align-items-center">
                                 <h5>
-                                    <span>{props.name}</span>
+                                    <a >{props.name}</a>
                                 </h5>
                                 <p className="date">{props.date} </p>
                             </div>

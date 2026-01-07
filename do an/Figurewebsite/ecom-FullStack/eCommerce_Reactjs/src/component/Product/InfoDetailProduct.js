@@ -28,7 +28,7 @@ function InfoDetailProduct(props) {
 
             props.sendDataFromInforDetail(productDetail[0].productDetailSize[0])
         }
-    }, [dataProduct, props])
+    }, [props.dataProduct])
 
     let handleSelectDetail = (event) => {
         setarrDetail(productDetail[event.target.value])
@@ -132,15 +132,15 @@ function InfoDetailProduct(props) {
                     <h2>{CommonUtils.formatter.format(arrDetail.discountPrice)}</h2>
                     <ul className="list">
                         <li>
-                            <div className="active">
-                                <span>Loại</span> : {dataProduct && dataProduct.categoryData ? dataProduct.categoryData.value : ''}</div>
+                            <a className="active" href="#">
+                                <span>Loại</span> : {dataProduct && dataProduct.categoryData ? dataProduct.categoryData.value : ''}</a>
                         </li>
                         <li>
-                            <div> <span>Trạng thái</span> : {quantity > 0 ? 'Còn hàng' : 'Hết hàng'}</div>
+                            <a href="#"> <span>Trạng thái</span> : {quantity > 0 ? 'Còn hàng' : 'Hết hàng'}</a>
                         </li>
                         <li>
                             <div className="box-size">
-                                <div> <span>Size</span></div>
+                                <a href="#"> <span>Size</span></a>
                                 {arrDetail && arrDetail.productDetailSize && arrDetail.productDetailSize.length > 0 &&
                                     arrDetail.productDetailSize.map((item, index) => {
 
@@ -158,7 +158,7 @@ function InfoDetailProduct(props) {
                             </div>
                         </li>
                         <li>
-                            <div>{quantity} sản phẩm có sẵn</div>
+                            <a href="#">{quantity} sản phẩm có sẵn</a>
                         </li>
                     </ul>
                     <p>
@@ -189,10 +189,10 @@ function InfoDetailProduct(props) {
 
 
                     <div className="card_area">
-                        <button className="main_btn" onClick={() => handleAddShopCart()}>Thêm vào giỏ</button>
-                        <button className="icon_btn">
+                        <a className="main_btn" onClick={() => handleAddShopCart()}>Thêm vào giỏ</a>
+                        <a className="icon_btn" href="#">
                             <i className="lnr lnr lnr-heart" />
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>

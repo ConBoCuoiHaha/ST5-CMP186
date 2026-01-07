@@ -13,7 +13,7 @@ let sendSimpleEmail = async (dataSend) => {
     });
     if (dataSend.type === 'verifyEmail') {
         let info = await transporter.sendMail({
-            from: '"tuankhoi" <tuankhoi@gmail.com>', // sender address
+            from: '"NghiaLe" <nghialequang21@gmail.com>', // sender address
             to: dataSend.email, // list of receivers
             subject: "Xác thực email | WIBUSHOP", // Subject line
             html: getBodyHTMLEmailVerify(dataSend)
@@ -21,7 +21,7 @@ let sendSimpleEmail = async (dataSend) => {
     }
     if (dataSend.type === 'forgotpassword') {
         let info = await transporter.sendMail({
-            from: '"tuankhoi" <tuankhoi@gmail.com>', // sender address
+            from: '"NghiaLe" <nghialequang21@gmail.com>', // sender address
             to: dataSend.email, // list of receivers
             subject: "Xác nhận quên mật khẩu | WIBUSHOP", // Subject line
             html: getBodyHTMLEmailForgotPassword(dataSend)

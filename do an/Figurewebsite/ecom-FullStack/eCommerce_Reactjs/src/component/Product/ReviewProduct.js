@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ReviewProduct.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
@@ -13,20 +13,30 @@ function ReviewProduct(props) {
         activeStar: '', imageReview: '', image: '', content: '', user: JSON.parse(localStorage.getItem('userData')), dataReview: [], countStar: {}, isOpen: false,
         isOpenModal: false, parentId: ''
     });
+    useEffect(() => {
+        let fetchAllReview = async () => {
+            await loadAllReview()
+        }
+        fetchAllReview()
+    }, [])
+    let openPreviewImage = (url) => {
 
-    const loadAllReview = useCallback(async () => {
-        let res = await getAllReviewByProductIdService(id);
+        setInputValues({ ...inputValues, ["imageReview"]: url, ["isOpen"]: true })
+
+
+    }
+    let loadAllReview = async () => {
+
+        let res = await getAllReviewByProductIdService(id)
         if (res && res.errCode === 0) {
-            let count5 = res.data.filter(item => item.star === 5);
-            let count4 = res.data.filter(item => item.star === 4);
-            let count3 = res.data.filter(item => item.star === 3);
-            let count2 = res.data.filter(item => item.star === 2);
-            let count1 = res.data.filter(item => item.star === 1);
+            let count5 = res.data.filter(item => item.star === 5)
+            let count4 = res.data.filter(item => item.star === 4)
+            let count3 = res.data.filter(item => item.star === 3)
+            let count2 = res.data.filter(item => item.star === 2)
+            let count1 = res.data.filter(item => item.star === 1)
 
-            setInputValues(prevValues => ({
-                ...prevValues,
-                dataReview: res.data,
-                countStar: {
+            await setInputValues({
+                ...inputValues, ["dataReview"]: res.data, ["countStar"]: {
                     star5: count5.length,
                     star4: count4.length,
                     star3: count3.length,
@@ -35,24 +45,12 @@ function ReviewProduct(props) {
                     average: ((count5.length * 5) + (count4.length * 4) + (count3.length * 3) + (count2.length * 2) + (count1.length * 1)) / (count5.length + count4.length + count3.length + count2.length + count1.length),
                     quantity: count5.length + count4.length + count3.length + count2.length + count1.length
                 },
-                content: '',
-                image: '',
-                imageReview: '',
-                activeStar: '',
-                isOpenModal: false
-            }));
+                ["content"]: '', ["image"]: '', ["imageReview"]: '', ["activeStar"]: '', ["isOpenModal"]: false
+            })
         }
-    }, [id]);
-
-    useEffect(() => {
-        loadAllReview();
-    }, [loadAllReview]);
-
-    let openPreviewImage = (url) => {
-        setInputValues({ ...inputValues, imageReview: url, isOpen: true });
-    };
+    }
     let handleChooseStart = (number) => {
-        setInputValues({ ...inputValues, activeStar: number })
+        setInputValues({ ...inputValues, ["activeStar"]: number })
     }
     let handleOnChangeImage = async (event) => {
         let data = event.target.files;
@@ -63,7 +61,7 @@ function ReviewProduct(props) {
         else{
             let base64 = await CommonUtils.getBase64(file);
             let objectUrl = URL.createObjectURL(file)
-            setInputValues({ ...inputValues, image: base64, imageReview: objectUrl })
+            setInputValues({ ...inputValues, ["image"]: base64, ["imageReview"]: objectUrl })
         }
        
     }
@@ -94,11 +92,11 @@ function ReviewProduct(props) {
         }
     }
     let closeModal = () => {
-        setInputValues({ ...inputValues, isOpenModal: false, parentId: '' })
+        setInputValues({ ...inputValues, ["isOpenModal"]: false, ["parentId"]: '' })
 
     }
     let handleOpenModal = (id) => {
-        setInputValues({ ...inputValues, isOpenModal: true, parentId: id })
+        setInputValues({ ...inputValues, ["isOpenModal"]: true, ["parentId"]: id })
 
     }
     let sendDataFromReViewModal = async (content) => {
@@ -143,38 +141,38 @@ function ReviewProduct(props) {
                             <h3>{inputValues.countStar.quantity} lượt đánh giá</h3>
                             <ul className="list">
                                 <li>
-                                    <div>5
+                                    <a href="#">5
                                         <i className="fa fa-star" />
                                         <i className="fa fa-star" />
                                         <i className="fa fa-star" />
                                         <i className="fa fa-star" />
-                                        <i className="fa fa-star" /> Có {inputValues.countStar.star5} lượt đánh giá</div>
+                                        <i className="fa fa-star" /> Có {inputValues.countStar.star5} lượt đánh giá</a>
                                 </li>
                                 <li>
-                                    <div>4
+                                    <a href="#">4
                                         <i className="fa fa-star" />
                                         <i className="fa fa-star" />
                                         <i className="fa fa-star" />
 
-                                        <i className="fa fa-star" /> Có {inputValues.countStar.star4} lượt đánh giá</div>
+                                        <i className="fa fa-star" /> Có {inputValues.countStar.star4} lượt đánh giá</a>
                                 </li>
                                 <li>
-                                    <div>3
+                                    <a href="#">3
                                         <i className="fa fa-star" />
                                         <i className="fa fa-star" />
 
-                                        <i className="fa fa-star" /> Có {inputValues.countStar.star3} lượt đánh giá</div>
+                                        <i className="fa fa-star" /> Có {inputValues.countStar.star3} lượt đánh giá</a>
                                 </li>
                                 <li>
-                                    <div>2
+                                    <a href="#">2
                                         <i className="fa fa-star" />
 
-                                        <i className="fa fa-star" /> Có {inputValues.countStar.star2} lượt đánh giá</div>
+                                        <i className="fa fa-star" /> Có {inputValues.countStar.star2} lượt đánh giá</a>
                                 </li>
                                 <li>
-                                    <div>1
+                                    <a href="#">1
 
-                                        <i className="fa fa-star" /> Có {inputValues.countStar.star1} lượt đánh giá</div>
+                                        <i className="fa fa-star" /> Có {inputValues.countStar.star1} lượt đánh giá</a>
                                 </li>
                             </ul>
                         </div>
@@ -235,7 +233,7 @@ function ReviewProduct(props) {
                                                     })
                                                 }
                                                 {inputValues.user && inputValues.user.roleId === "R1" &&
-                                                    <button style={{ cursor: 'pointer' }} onClick={() => handleOpenModal(item.id)} className="reply_btn" >Phản hồi</button>
+                                                    <a style={{ cursor: 'pointer' }} onClick={() => handleOpenModal(item.id)} className="reply_btn" >Phản hồi</a>
                                                 }
 
                                             </div>
@@ -245,7 +243,7 @@ function ReviewProduct(props) {
                                                 {item.content}
                                             </p>
                                             {item.image &&
-                                                <img onClick={() => openPreviewImage(item.image)} className="img-cmt" src={item.image} alt="Review"></img>
+                                                <img onClick={() => openPreviewImage(item.image)} className="img-cmt" src={item.image}></img>
                                             }
                                             {item.childComment && item.childComment.length > 0 &&
                                                 item.childComment.map((item, index) => {
@@ -267,7 +265,6 @@ function ReviewProduct(props) {
                                     </div>
                                 )
                             }
-                            return null;
 
                         })
                     }
@@ -279,7 +276,7 @@ function ReviewProduct(props) {
             {
                 inputValues.isOpen === true &&
                 <Lightbox mainSrc={inputValues.imageReview}
-                    onCloseRequest={() => setInputValues({ ...inputValues, isOpen: false, imageReview: '' })}
+                    onCloseRequest={() => setInputValues({ ...inputValues, ["isOpen"]: false, ["imageReview"]: '' })}
                 />
             }
             <ReviewModal

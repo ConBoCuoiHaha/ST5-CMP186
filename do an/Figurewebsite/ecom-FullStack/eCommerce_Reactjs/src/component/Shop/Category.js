@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFetchAllcode } from '../../container/customize/fetch';
 import { getAllCodeService } from '../../services/userService';
 function Category(props) {
 
@@ -39,7 +40,7 @@ function Category(props) {
                         arrCategory.map((item, index) => {
                             return (
                                 <li className={item.code === activeLinkId ? 'active' : ''} style={{ cursor: 'pointer' }} onClick={() => handleClickCategory(item.code)} key={index}>
-                                    {item.value}
+                                    <a>{item.value}</a>
                                 </li>
                             )
                         })

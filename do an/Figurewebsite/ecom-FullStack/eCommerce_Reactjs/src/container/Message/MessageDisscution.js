@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useParams } from "react-router-dom";
 import moment from 'moment';
 function MessageDisscution(props) {
   const [dataRoom, setdataRoom] = useState([])
@@ -77,9 +77,9 @@ handleSearchRoom(roomList)
                 });
                 return(
                   <li onClick={() => handleClickRoom(item.id)} key={index} className="ks-item">
-                  <div style={{cursor: 'pointer'}}>
+                  <a href="#">
                     <span className="ks-avatar">
-                      <img src={userData.image} width={36} height={36} alt="" />
+                      <img src={userData.image} width={36} height={36} />
                       <span className="badge badge-pill badge-danger ks-badge ks-notify">{count && count > 0 ? count : ''}</span>
                     </span>
                     <div className="ks-body">
@@ -89,7 +89,7 @@ handleSearchRoom(roomList)
                       </div>
                       <div className="ks-message">{item.messageData && item.messageData.length > 0 ? item.messageData[item.messageData.length-1].text :'Chưa có tin nhắn'}</div>
                     </div>
-                  </div>
+                  </a>
                 </li>
                 )
               })

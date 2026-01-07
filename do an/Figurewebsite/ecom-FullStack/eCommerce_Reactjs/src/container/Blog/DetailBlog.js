@@ -44,19 +44,19 @@ function DetailBlog(props) {
   }
   let loadFeatureBlog = async () => {
     let res = await getFeatureBlog(6)
-    if (res && res.errCode === 0) {
+    if (res && res.errCode == 0) {
       setdataFeatureBlog(res.data)
     }
   }
   let loadCategoryBlog = async () => {
     let res = await getAllCategoryBlogService('SUBJECT')
-    if (res && res.errCode === 0) {
+    if (res && res.errCode == 0) {
       setdataSubject(res.data)
     }
   }
   let loadDataBlog = async (id) => {
     let res = await getDetailBlogByIdService(id)
-    if (res && res.errCode === 0) {
+    if (res && res.errCode == 0) {
       setdataBlog(res.data)
     }
   }
@@ -67,7 +67,7 @@ function DetailBlog(props) {
         blogId: id,
         userId: user.id,
       })
-      if (res && res.errCode === 0) {
+      if (res && res.errCode == 0) {
         toast.success('Đăng bình luận thành công')
         loadComment(id)
       } else {
@@ -79,15 +79,15 @@ function DetailBlog(props) {
   }
   return (
     <>
-      <section className="banner_area">
-        <div className="banner_inner d-flex align-items-center">
-          <div className="container">
-            <div className="banner_content d-md-flex justify-content-between align-items-center">
-              <div className="mb-3 mb-md-0">
+      <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+          <div class="container">
+            <div class="banner_content d-md-flex justify-content-between align-items-center">
+              <div class="mb-3 mb-md-0">
                 <h2>Chi tiết bài đăng</h2>
                 <p>Theo dõi bài đăng để nhận thông tin mới nhất</p>
               </div>
-              <div className="page_link">
+              <div class="page_link">
                 <Link to={"/"}>Trang chủ</Link>
                 <Link to={"/blog"}>Tin tức</Link>
               </div>
@@ -106,8 +106,8 @@ function DetailBlog(props) {
                 <div className="blog_details">
                   <h2>{dataBlog.title}</h2>
                   <ul className="blog-info-link mt-3 mb-4">
-                  <li><span><i className="ti-comments" /> {dataComment.length} Nghĩa</span></li>
-                    <li><span><i className="ti-comments" /> {dataComment.length} Bình luận</span></li>
+                    <li><a href="#"><i className="ti-comments" /> {dataComment.length} Like</a></li>
+                    <li><a href="#"><i className="ti-comments" /> {dataComment.length} Bình luận</a></li>
                   </ul>
                   <div className="quote-wrapper">
                     <div className="quotes">
@@ -133,7 +133,6 @@ function DetailBlog(props) {
                         />
                       )
                     }
-                    return null;
 
                   })
                 }

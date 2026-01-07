@@ -128,22 +128,22 @@ const AddVoucher = (props) => {
                     <form>
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label htmlFor="fromDate">Ngày bắt đầu</label>
-                                <DatePicker className="form-control" id="fromDate" onChange={handleOnChangeDatePickerFromDate}
+                                <label htmlFor="inputEmail4">Ngày bắt đầu</label>
+                                <DatePicker className="form-control" onChange={handleOnChangeDatePickerFromDate}
                                     value={inputValues.fromDate}
 
                                 />
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="toDate">Ngày kết thúc</label>
-                                <DatePicker className="form-control" id="toDate" onChange={handleOnChangeDatePickerToDate}
+                                <label htmlFor="inputPassword4">Ngày kết thúc</label>
+                                <DatePicker className="form-control" onChange={handleOnChangeDatePickerToDate}
                                     value={inputValues.toDate}
 
                                 />
                             </div>
                             <div className="form-group col-md-4">
-                                <label htmlFor="typeVoucherId">Loại voucher</label>
-                                <select value={inputValues.typeVoucherId} name="typeVoucherId" onChange={(event) => handleOnChange(event)} id="typeVoucherId" className="form-control">
+                                <label htmlFor="inputEmail4">Loại voucher</label>
+                                <select value={inputValues.typeVoucherId} name="typeVoucherId" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
                                     {dataTypeVoucher && dataTypeVoucher.length > 0 &&
                                         dataTypeVoucher.map((item, index) => {
                                             let name = `${item.value} ${item.typeVoucherData.value}`
@@ -155,12 +155,12 @@ const AddVoucher = (props) => {
                                 </select>
                             </div>
                             <div className="form-group col-md-4">
-                                <label htmlFor="amount">Số lượng mã</label>
-                                <input type="number" value={inputValues.amount} name="amount" onChange={(event) => handleOnChange(event)} className="form-control" id="amount" />
+                                <label htmlFor="inputPassword4">Số lượng mã</label>
+                                <input type="number" value={inputValues.amount} name="amount" onChange={(event) => handleOnChange(event)} className="form-control" id="inputPassword4" />
                             </div>
                             <div className="form-group col-md-4">
-                                <label htmlFor="codeVoucher">Mã voucher</label>
-                                <input type="text" value={inputValues.codeVoucher} name="codeVoucher" onChange={(event) => handleOnChange(event)} className="form-control" id="codeVoucher" />
+                                <label htmlFor="inputPassword4">Mã voucher</label>
+                                <input type="text" value={inputValues.codeVoucher} name="codeVoucher" onChange={(event) => handleOnChange(event)} className="form-control" id="inputPassword4" />
                             </div>
                         </div>
                         <button onClick={() => handleSaveInforVoucher()} type="button" className="btn btn-primary">Lưu thông tin</button>

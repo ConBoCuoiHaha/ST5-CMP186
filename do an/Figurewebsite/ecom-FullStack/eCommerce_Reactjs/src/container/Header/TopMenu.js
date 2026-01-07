@@ -1,7 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import './Header.scss';
 const TopMenu = props => {
+    let history = useHistory();
 
     let handleLogout = () => {
         localStorage.removeItem("userData");
@@ -20,8 +22,8 @@ const TopMenu = props => {
                 <div className="row">
                     <div className="col-lg-7">
                         <div className="float-left">
-                            <p>Điện thoại: 0365242679 </p>
-                            <p>email: admin@gmail.com</p>
+                            <p>Điện thoại: 0339940060 </p>
+                            <p>email: tuankhoiyahoo@gmail.com</p>
                         </div>
                     </div>
                     <div className="col-lg-5">
@@ -40,9 +42,9 @@ const TopMenu = props => {
                                 </li>
                                 <li style={{ cursor: 'pointer' }}>
 
-                                    {props.user && props.user.id ? <button onClick={() => handleLogout()}>
+                                    {props.user && props.user.id ? <a onClick={() => handleLogout()}>
                                         Đăng xuất
-                                    </button>
+                                    </a>
                                         :
                                         <a href="/login">
                                             Đăng ký
@@ -50,7 +52,7 @@ const TopMenu = props => {
                                     }
                                 </li>
                                 <li>
-                                    <span>VI</span>
+                                    <a>VI</a>
                                 </li>
 
                             </ul>

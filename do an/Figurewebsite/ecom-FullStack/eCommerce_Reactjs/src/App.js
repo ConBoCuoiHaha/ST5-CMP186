@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { Component, Fragment, useEffect, useState } from 'react';
 import './css/App.css';
 import Header from './container/Header/Header';
 import Footer from './container/Footer/Footer';
@@ -11,21 +11,25 @@ import BlogPage from './container/Blog/BlogPage';
 import DetailBlog from './container/Blog/DetailBlog';
 
 import HomePageAdmin from './container/System/HomePageAdmin';
+import { path } from '../src/utils/constant'
 import { ToastContainer } from 'react-toastify';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 
 import { Redirect } from 'react-router';
 import VerifyEmail from './container/System/Email/VerifyEmail';
 import LoginWebPage from './container/Login/LoginWebPage';
 import UserHomePage from './container/User/UseHomePage';
+import CustomScrollbars from './component/input/CustomScrollbars';
 import VoucherHomePage from './container/Voucher/VoucherHomePage';
 import OrderHomePage from './container/Order/OrderHomePage';
 import TopMenu from './container/Header/TopMenu';
 import PaymentSuccess from './container/User/PaymentSuccess';
+import MessagePage from './container/Message/MessagePage';
 import VnpayPaymentPage from './container/Order/VnpayPaymentPage';
 import VnpayPaymentSuccess from './container/Order/VnpayPaymentSuccess';
 
@@ -33,8 +37,8 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <Switch>
+      <Switch>
+        <div className="App">
           <Route exact path="/">
             <Header />
             <HomePage />
@@ -132,8 +136,8 @@ function App() {
             draggable
             pauseOnHover
           />
-        </Switch>
-      </div>
+        </div>
+      </Switch>
     </Router>
 
   );

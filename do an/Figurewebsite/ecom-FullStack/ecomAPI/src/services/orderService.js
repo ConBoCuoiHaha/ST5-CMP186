@@ -651,14 +651,18 @@ let paymentOrderVnpay = (req) => {
 
 
             var tmnCode = process.env.VNP_TMNCODE;
-            var secretKey = process.env.VNP_HASHSECRET
-            var vnpUrl = process.env.VNP_URL
-            var returnUrl = process.env.VNP_RETURNURL
+            var secretKey = process.env.VNP_HASHSECRET;
+            var vnpUrl = process.env.VNP_URL;
+            var returnUrl = process.env.VNP_RETURNURL;
+
+            if (ipAddr === "::1" || ipAddr === "127.0.0.1") {
+                ipAddr = "127.0.0.1";
+            }
 
 
 
 
-            var createDate = process.env.DATE_VNPAYMENT;
+            var createDate = moment(new Date()).format('YYYYMMDDHHmmss');
             var orderId = uuidv4();
 
             console.log("createDate", createDate)
@@ -683,7 +687,7 @@ let paymentOrderVnpay = (req) => {
             vnp_Params['vnp_TxnRef'] = orderId;
             vnp_Params['vnp_OrderInfo'] = orderInfo;
             vnp_Params['vnp_OrderType'] = orderType;
-            vnp_Params['vnp_Amount'] = amount * 100;
+            vnp_Params['vnp_Amount'] = Math.round(amount * 100);
             vnp_Params['vnp_ReturnUrl'] = returnUrl;
             vnp_Params['vnp_IpAddr'] = ipAddr;
             vnp_Params['vnp_CreateDate'] = createDate;
@@ -701,7 +705,8 @@ let paymentOrderVnpay = (req) => {
             vnp_Params['vnp_SecureHash'] = signed;
 
             vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
-            console.log(vnpUrl)
+            console.log("FULL VNPAY URL:", vnpUrl);
+            console.log("Using TmnCode:", tmnCode);
             resolve({
                 errCode: 200,
                 link: vnpUrl

@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef } from 'react';
-
+import { useParams } from "react-router-dom";
 import ChatWindow from './ChatWindow';
 import MessageDisscution from './MessageDisscution';
 import './MessagePage.scss';
@@ -12,7 +12,7 @@ function MessagePage(props) {
   const [dataUser, setdataUser] = useState({})
   const host = process.env.REACT_APP_BACKEND_URL;
   const socketRef = useRef();
-  
+  const [id, setId] = useState();
   useEffect(()=>{
     socketRef.current = socketIOClient.connect(host)
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -27,7 +27,7 @@ function MessagePage(props) {
     }
     if(userData){
       socketRef.current.on('getId', data => {
-        
+        setId(data)
       }) // phần này đơn giản để gán id cho mỗi phiên kết nối vào page. Mục đích chính là để phân biệt đoạn nào là của mình đang chat.
       createRoom()
   
@@ -47,7 +47,7 @@ function MessagePage(props) {
     }
    
 
-  },[host])
+  },[])
  let handleClickRoom = (roomId)=>{
   
   socketRef.current.emit('loadRoomClient')
@@ -56,7 +56,7 @@ function MessagePage(props) {
  }
  let fetchListRoom = async(userId) =>{
   let res = await listRoomOfUser(userId)
-  if(res && res.errCode===0){
+  if(res && res.errCode==0){
     setdataRoom(res.data)
   }
 }

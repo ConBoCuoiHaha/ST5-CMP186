@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function ItemCategory(props) {
     
@@ -8,10 +8,10 @@ function ItemCategory(props) {
     }
     return (
         <li >
-            <button style={{cursor:'pointer'}} onClick={() => handleClickCategory(props.data.code)} className={props.data.code === props.activeLinkId ? "d-flex activeCategory": "d-flex"}>
+            <a style={{cursor:'pointer'}} onClick={() => handleClickCategory(props.data.code)} class={props.data.code === props.activeLinkId ? "d-flex activeCategory": "d-flex"}>
              <p>{props.data.value}</p>
               <p>({props.data.countPost})</p>
-               </button>
+               </a>
          </li>
     );
 }

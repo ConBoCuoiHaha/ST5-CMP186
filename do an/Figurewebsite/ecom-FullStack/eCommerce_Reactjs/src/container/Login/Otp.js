@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Otp.scss';
 import firebase from '../../utils/firebase';
 import { toast } from 'react-toastify';
@@ -8,39 +8,51 @@ const Otp = (props) => {
     const [inputValues, setInputValues] = useState({
         so1: '', so2: '', so3: '', so4: '', so5: '', so6: ''
     });
-    const configureCaptcha = useCallback(() => {
+    useEffect(() => {
+        if (props.dataUser) {
+            let fetchOtp = async () => {
+                await onSignInSubmit(false)
+            }
+            fetchOtp()
+
+        }
+
+
+
+    }, [props.dataUser])
+    let configureCaptcha = () => {
+
         window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
             'size': 'invisible',
             defaultCountry: "VN"
         });
-    }, []);
-
-    const onSignInSubmit = useCallback(async (isResend) => {
-        if (!isResend) {
-            configureCaptcha();
-        }
-        let phoneNumber = props.dataUser.phonenumber;
+    }
+    let onSignInSubmit = async (isResend) => {
+        if (!isResend)
+            configureCaptcha()
+        let phoneNumber = props.dataUser.phonenumber
         if (phoneNumber) {
             phoneNumber = "+84" + phoneNumber.slice(1);
         }
 
+
+        console.log("check phonenumber", phoneNumber)
         const appVerifier = window.recaptchaVerifier;
 
-        try {
-            const confirmationResult = await firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier);
-            window.confirmationResult = confirmationResult;
-            toast.success("Đã gửi mã OTP vào điện thoại");
-        } catch (error) {
-            console.log(error);
-            toast.error("Gửi mã thất bại !");
-        }
-    }, [props.dataUser.phonenumber, configureCaptcha]);
 
-    useEffect(() => {
-        if (props.dataUser) {
-            onSignInSubmit(false);
-        }
-    }, [props.dataUser, onSignInSubmit]);
+        await firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+            .then((confirmationResult) => {
+                // SMS sent. Prompt user to type the code from the message, then sign the
+                // user in with confirmationResult.confirm(code).
+                window.confirmationResult = confirmationResult;
+                toast.success("Đã gửi mã OTP vào điện thoại")
+
+                // ...
+            }).catch((error) => {
+                console.log(error)
+                toast.error("Gửi mã thất bại !")
+            });
+    }
     const handleOnChange = event => {
         const { name, value } = event.target;
         setInputValues({ ...inputValues, [name]: value });
@@ -51,7 +63,7 @@ const Otp = (props) => {
 
         await window.confirmationResult.confirm(code).then((result) => {
             // User signed in successfully.
-            
+            const user = result.user;
             toast.success("Đã xác minh số điện thoại !")
             let createUser = async () => {
                 let res = await createNewUser({
@@ -115,7 +127,7 @@ const Otp = (props) => {
             <div className="container d-flex justify-content-center align-items-center container_Otp">
                 <div className="card text-center">
                     <div className="card-header p-5">
-                        <img alt="" src="https://raw.githubusercontent.com/Rustcodeweb/OTP-Verification-Card-Design/main/mobile.png" />
+                        <img src="https://raw.githubusercontent.com/Rustcodeweb/OTP-Verification-Card-Design/main/mobile.png" />
                         <h5 style={{ color: '#fff' }} className="mb-2">XÁC THỰC OTP</h5>
                         <div>
                             <small>Mã đã được gửi tới sdt {props.dataUser && props.dataUser.phonenumber}</small>
@@ -132,7 +144,7 @@ const Otp = (props) => {
                     <div>
                         <small>
                             Bạn không nhận được Otp ?
-                            <button type="button" onClick={() => resendOTP()} style={{ background: 'none', border: 'none', padding: 0, color: '#3366FF', cursor: 'pointer' }} className="text-decoration-none ml-2">Gửi lại</button>
+                            <a onClick={() => resendOTP()} style={{ color: '#3366FF' }} className="text-decoration-none ml-2">Gửi lại</a>
                         </small>
                     </div>
                     <div className="mt-3 mb-5">

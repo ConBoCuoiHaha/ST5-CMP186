@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useHistory } from "react-router";
 import { toast } from 'react-toastify';
 import './LoginWebPage.css';
 import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
@@ -7,11 +8,13 @@ import { handleLoginService, checkPhonenumberEmail, createNewUser } from '../../
 import Otp from "./Otp";
 import { authentication } from "../../utils/firebase";
 import { signInWithPopup, FacebookAuthProvider, GoogleAuthProvider } from 'firebase/auth'
+import { async } from "@firebase/util";
 const LoginWebPage = () => {
 
     const [inputValues, setInputValues] = useState({
         email: '', password: 'passwordsecrect', lastName: '', phonenumber: '', isOpen: false, dataUser: {}
     });
+    let history = useHistory()
     const handleOnChange = event => {
         const { name, value } = event.target;
         setInputValues({ ...inputValues, [name]: value });
@@ -90,14 +93,14 @@ const LoginWebPage = () => {
             toast.error(res.errMessage)
         } else {
             setInputValues({
-                ...inputValues, dataUser:
+                ...inputValues, ["dataUser"]:
                 {
                     email: inputValues.email,
                     lastName: inputValues.lastName,
                     phonenumber: inputValues.phonenumber,
                     password: inputValues.password,
                     roleId: 'R2',
-                }, isOpen: true
+                }, ["isOpen"]: true
             })
         }
 
@@ -137,7 +140,7 @@ const LoginWebPage = () => {
         if (res.isCheck === true) {
             setInputValues({
                 ...inputValues,
-                email: re.user.providerData[0].email,
+                ["email"]: re.user.providerData[0].email,
 
 
             })
@@ -191,7 +194,7 @@ const LoginWebPage = () => {
                             <div className="row">
                                 {/* Brand Box */}
                                 <div className="col-sm-6 brand">
-                                    <a href="/" className="logo"><span></span></a>
+                                    <a href="#" className="logo"><span></span></a>
                                     <div className="heading">
                                         <h2>wibu shop</h2>
                                         
@@ -213,7 +216,7 @@ const LoginWebPage = () => {
                                             </div>
                                             <div className="CTA">
                                                 <input onClick={() => handleLogin()} type="submit" value="Đăng nhập" />
-                                                <button type="button" style={{ background: 'transparent', border: 'none', cursor: 'pointer' }} className="switch">Tài khoản mới</button>
+                                                <a style={{ cursor: 'pointer', }} className="switch">Tài khoản mới</a>
                                             </div>
                                             <FacebookLoginButton text="Đăng nhập với Facebook" iconSize="25px" style={{ width: "300px", height: "40px", fontSize: "16px", marginTop: "40px", marginBottom: "10px" }} onClick={() => signInwithFacebook()} />
                                             <GoogleLoginButton text="Đăng nhập với Google" iconSize="25px" style={{ width: "300px", height: "40px", fontSize: "16px" }} onClick={() => signInwithGoogle()} />
@@ -249,7 +252,7 @@ const LoginWebPage = () => {
                                             </div>
                                             <div className="CTA">
                                                 <input onClick={() => handleSaveUser()} type="submit" value="Lưu" id="submit" />
-                                                <button type="button" style={{ background: 'transparent', border: 'none', cursor: 'pointer' }} className="switch">Tôi có tài khoản</button>
+                                                <a style={{ cursor: 'pointer' }} className="switch">Tôi có tài khoản</a>
                                             </div>
                                         </form>
                                     </div>{/* End Signup Form */}

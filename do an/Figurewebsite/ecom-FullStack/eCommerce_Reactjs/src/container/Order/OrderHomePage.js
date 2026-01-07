@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { NavLink, useHistory, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink, useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     getAllAddressUserByUserIdService, createNewAddressUserrService, getAllTypeShip, createNewOrderService
-    , paymentOrderService
+    , paymentOrderService, getExchangeRate
 } from '../../services/userService';
 import './OrderHomePage.scss';
 import AddressUsersModal from '../ShopCart/AdressUserModal';
@@ -20,7 +20,7 @@ function OrderHomePage(props) {
     const { userId } = useParams()
     let history = useHistory()
     const [addressUserId, setaddressUserId] = useState('')
-
+    const [ratesData, setratesData] = useState([])
     const [priceShip, setpriceShip] = useState(0)
     let price = 0;
     let total = 0;
@@ -35,15 +35,6 @@ function OrderHomePage(props) {
     const [activeTypePayment, setactiveTypePayment] = useState(1)
     const [activeTypeOnlPayment, setactiveTypeOnlPayment] = useState(1)
     const [note, setnote] = useState('');
-
-    const loadDataAddress = useCallback(async (userId) => {
-        let res = await getAllAddressUserByUserIdService(userId)
-        if (res && res.errCode === 0) {
-            setdataAddressUser(res.data)
-            setaddressUserId(res.data[0].id)
-        }
-    }, [])
-
     useEffect(() => {
         dispatch(getItemCartStart(userId))
         let fetchDataAddress = async () => {
@@ -61,13 +52,21 @@ function OrderHomePage(props) {
             }
         }
         fetchTypeShip()
-
+        fetchExchangeRate()
         if (dataTypeShip && dataTypeShip.price) {
             setpriceShip(dataTypeShip.price)
         }
 
-    }, [dispatch, userId, dataTypeShip, loadDataAddress])
+    }, [])
 
+
+    let loadDataAddress = async (userId) => {
+        let res = await getAllAddressUserByUserIdService(userId)
+        if (res && res.errCode === 0) {
+            setdataAddressUser(res.data)
+            setaddressUserId(res.data[0].id)
+        }
+    }
     let closeModaAddressUser = () => {
         setisOpenModalAddressUser(false)
     }
@@ -127,6 +126,10 @@ function OrderHomePage(props) {
         dispatch(ChooseTypeShipStart(item))
         setpriceShip(item.price)
     }
+    let fetchExchangeRate = async () => {
+        let res = await getExchangeRate()
+        if (res) setratesData(res)
+    }
     let handleSaveOrder = async () => {
 
         if (!dataTypeShip.id) {
@@ -134,7 +137,7 @@ function OrderHomePage(props) {
         } else {
 
             let result = [];
-            dataCart.forEach((item, index) => {
+            dataCart.map((item, index) => {
                 let object = {};
                 object.productId = item.productdetailsizeId
                 object.quantity = item.quantity
@@ -142,7 +145,7 @@ function OrderHomePage(props) {
                 result.push(object)
             })
 
-            if (activeTypePayment === 0) {
+            if (activeTypePayment == 0) {
                 let res = await createNewOrderService({
                     orderdate: Date.now(),
                     addressUserId: addressUserId,
@@ -170,7 +173,7 @@ function OrderHomePage(props) {
                         total: total,
                         result: result
                     })
-                    if (res && res.errCode === 0) {
+                    if (res && res.errCode == 0) {
 
 
                         localStorage.setItem("orderData", JSON.stringify({
@@ -262,7 +265,7 @@ function OrderHomePage(props) {
                                             return (
                                                 <div key={index} className="form-check ">
                                                     <input className="form-check-input" checked={item.id === addressUserId ? true : false} onChange={() => handleOnChange(item.id, index)} type="radio" name="addressRadios" id={`addressRadios${index}`} />
-                                                    <label className="form-check-label wrap-radio-address" htmlFor={`addressRadios${index}`}>
+                                                    <label className="form-check-label wrap-radio-address" for={`addressRadios${index}`}>
                                                         <div className="content-left">
                                                             <span>{item.shipName} ({item.shipPhonenumber})</span>
                                                         </div>
@@ -345,7 +348,7 @@ function OrderHomePage(props) {
                                             return (
                                                 <div key={index} className="form-check">
                                                     <input className="form-check-input" checked={item.id === dataTypeShip.id ? true : false} type="radio" name="typeshipRadios" id={`typeshipRadios${index}`} onChange={() => handleChooseTypeShip(item)} />
-                                                    <label className="form-check-label" htmlFor={`typeshipRadios${index}`}>
+                                                    <label className="form-check-label" for={`typeshipRadios${index}`}>
                                                         {item.type} - {CommonUtils.formatter.format(item.price)}
                                                     </label>
                                                 </div>
@@ -362,7 +365,7 @@ function OrderHomePage(props) {
                             <div className="box-shopcart-bottom">
                                 <div className="content-left">
                                     <div className="wrap-voucher">
-                                        <img width="20px" height="20px" style={{ marginLeft: "-3px" }} src={storeVoucherLogo} alt=""></img>
+                                        <img width="20px" height="20px" style={{ marginLeft: "-3px" }} src={storeVoucherLogo}></img>
                                         <span className="name-easier">Easier voucher</span>
                                         <span onClick={() => handleOpenModal()} className="choose-voucher">Chọn Mã</span>
                                         {dataVoucher && dataVoucher.voucherData &&
@@ -401,7 +404,7 @@ function OrderHomePage(props) {
 
                             <div onClick={() => setactiveTypePayment(0)} className={activeTypePayment === 0 ? 'box-type-payment active' : 'box-type-payment'}>Thanh toán khi nhận hàng</div>
                         </div>
-                        {activeTypePayment !== 0 &&
+                        {activeTypePayment != 0 &&
                             <div className='box-payment'>
                                 <div onClick={() => setactiveTypeOnlPayment(1)} className={activeTypeOnlPayment === 1 ? 'box-type-payment activeOnl' : 'box-type-payment'}>Thanh toán PAYPAL</div>
                                 <div onClick={() => setactiveTypeOnlPayment(2)} className={activeTypeOnlPayment === 2 ? 'box-type-payment activeOnl' : 'box-type-payment'}>Thanh toán VNPAY</div>
@@ -432,7 +435,7 @@ function OrderHomePage(props) {
                                 <div className="money">${dataVoucher && dataVoucher.voucherData ? CommonUtils.formatter.format(totalPriceDiscount(price, dataVoucher) + priceShip) : CommonUtils.formatter.format(price + (+priceShip))}</div>
                             </div>
                             <div className="box-flex">
-                                <button onClick={() => handleSaveOrder()} className="main_btn" type="button">Đặt hàng</button>
+                                <a onClick={() => handleSaveOrder()} className="main_btn">Đặt hàng</a>
                             </div>
 
                         </div>

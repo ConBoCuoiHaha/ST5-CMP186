@@ -101,8 +101,8 @@ const AddTypeVoucher = (props) => {
                     <form>
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label htmlFor="typeVoucher">Loại voucher</label>
-                                <select value={inputValues.typeVoucher} name="typeVoucher" onChange={(event) => handleOnChange(event)} id="typeVoucher" className="form-control">
+                                <label htmlFor="inputEmail4">Loại voucher</label>
+                                <select value={inputValues.typeVoucher} name="typeVoucher" onChange={(event) => handleOnChange(event)} id="inputState" className="form-control">
                                     {dataTypeVoucher && dataTypeVoucher.length > 0 &&
                                         dataTypeVoucher.map((item, index) => {
                                             return (
@@ -113,16 +113,16 @@ const AddTypeVoucher = (props) => {
                                 </select>
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="value">Giá trị</label>
-                                <input type="text" value={inputValues.value} name="value" onChange={(event) => handleOnChange(event)} className="form-control" id="value" />
+                                <label htmlFor="inputPassword4">Giá trị</label>
+                                <input type="text" value={inputValues.value} name="value" onChange={(event) => handleOnChange(event)} className="form-control" id="inputPassword4" />
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="minValue">Giá trị tối thiểu</label>
-                                <input type="number" value={inputValues.minValue} name="minValue" onChange={(event) => handleOnChange(event)} className="form-control" id="minValue" />
+                                <label htmlFor="inputEmail4">Giá trị tối thiểu</label>
+                                <input type="number" value={inputValues.minValue} name="minValue" onChange={(event) => handleOnChange(event)} className="form-control" id="inputEmail4" />
                             </div>
                             <div className="form-group col-md-6">
-                                <label htmlFor="maxValue">Giá trị tối đa</label>
-                                <input type="number" value={inputValues.maxValue} name="maxValue" onChange={(event) => handleOnChange(event)} className="form-control" id="maxValue" />
+                                <label htmlFor="inputPassword4">Giá trị tối đa</label>
+                                <input type="number" value={inputValues.maxValue} name="maxValue" onChange={(event) => handleOnChange(event)} className="form-control" id="inputPassword4" />
                             </div>
                         </div>
                         <button type="button" onClick={() => handleSaveTypeVoucher()} className="btn btn-primary">Lưu thông tin</button>

@@ -18,7 +18,7 @@ import FormSearch from '../../../component/Search/FormSearch';
 const ManageTypeShip = () => {
 
     const [dataTypeShip, setdataTypeShip] = useState([])
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState('')
     const [numberPage, setnumberPage] = useState('')
     const [keyword, setkeyword] = useState('')
     useEffect(() => {
@@ -37,7 +37,7 @@ const ManageTypeShip = () => {
         })
         if (arrData && arrData.errCode === 0) {
             setdataTypeShip(arrData.data)
-            setCount(arrData.count ? Math.ceil(arrData.count / PAGINATION.pagerow) : 0)
+            setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
         }
     }
     let handleDeleteTypeShip = async (id) => {
@@ -57,7 +57,7 @@ const ManageTypeShip = () => {
             })
             if (arrData && arrData.errCode === 0) {
                 setdataTypeShip(arrData.data)
-                setCount(arrData.count ? Math.ceil(arrData.count / PAGINATION.pagerow) : 0)
+                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
             }
 
         } else toast.error("Xóa loại ship thất bại")
@@ -114,11 +114,11 @@ const ManageTypeShip = () => {
                             <FormSearch title={"tên loại ship"} handleOnchange={handleOnchangeSearch} handleSearch={handleSearchTypeShip} />
                         </div>
                         <div className='col-8'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i class="fa-solid fa-file-excel"></i></button>
                         </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>STT</th>

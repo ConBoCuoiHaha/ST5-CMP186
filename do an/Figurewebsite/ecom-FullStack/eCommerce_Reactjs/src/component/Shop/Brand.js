@@ -37,7 +37,7 @@ function Brand(props) {
                         arrBrand.map((item, index) => {
                             return (
                                 <li className={item.code === activeLinkId ? 'active' : ''} style={{ cursor: 'pointer' }} onClick={() => handleClickBrand(item.code)} key={index}>
-                                    {item.value}
+                                    <a >{item.value}</a>
                                 </li>
                             )
                         })

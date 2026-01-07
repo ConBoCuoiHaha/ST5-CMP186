@@ -544,34 +544,6 @@ let checkPhonenumberEmail = (data) => {
         }
     })
 }
-//===================nguyen minh tai PRODUCT DETAIL========================//
-const createNewProductDetailImageService = (data) => {
-    return axios.post('/api/create-new-product-detail-image', data);
-}
-const createNewProductDetailSizeService = (data) => {
-    return axios.post('/api/create-new-product-detail-size', data);
-}
-const getProductDetailByIdService = (id) => {
-    return axios.get(`/api/get-product-detail-by-id?id=${id}`);
-}
-const updateProductDetailService = (data) => {
-    return axios.put('/api/update-product-detail', data);
-}
-const deleteProductDetailImageService = (data) => {
-    return axios.delete('/api/delete-product-detail-image', {
-        data: {
-            id: data.id
-        }
-    });
-}
-const deleteProductDetailSizeService = (data) => {
-    return axios.delete('/api/delete-product-detail-size', {
-        data: {
-            id: data.id
-        }
-    });
-}
-
 module.exports = {
     handleCreateNewUser: handleCreateNewUser,
     deleteUser: deleteUser,

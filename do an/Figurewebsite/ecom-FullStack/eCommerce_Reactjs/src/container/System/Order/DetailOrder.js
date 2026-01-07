@@ -29,7 +29,7 @@ function DetailOrder(props) {
                 let order = await getDetailOrder(id)
                 if (order && order.errCode == 0) {
                     setDataOrder(order.data)
-                    setpriceShip(order.data.typeShipData.price)
+                    setpriceShip(order.data.typeShipData?.price || 0)
                 }
             }
             fetchOrder()
@@ -39,7 +39,7 @@ function DetailOrder(props) {
     }
     let totalPriceDiscount = (price, discount) => {
         try {
-            if (discount.typeVoucherOfVoucherData.typeVoucher === "percent") {
+            if (discount.typeVoucherOfVoucherData?.typeVoucher === "percent") {
 
                 if (((price * discount.typeVoucherOfVoucherData.value) / 100) > discount.typeVoucherOfVoucherData.maxValue) {
 
@@ -164,11 +164,11 @@ function DetailOrder(props) {
 
                                             {DataOrder.orderDetail && DataOrder.orderDetail.length > 0 &&
                                                 DataOrder.orderDetail.map((item, index) => {
-                                                    price += item.quantity * item.productDetail.discountPrice
+                                                    price += item.quantity * item.productDetail?.discountPrice
 
-                                                    let name = `${item.product.name} - ${item.productDetail.nameDetail} - ${item.productDetailSize.sizeData.value}`
+                                                    let name = `${item.product?.name} - ${item.productDetail?.nameDetail} - ${item.productDetailSize?.sizeData?.value}`
                                                     return (
-                                                        <ShopCartItem isOrder={true} id={item.id} productdetailsizeId={item.productDetailSize.id} key={index} name={name} price={item.productDetail.discountPrice} quantity={item.quantity} image={item.productImage[0].image} />
+                                                        <ShopCartItem isOrder={true} id={item.id} productdetailsizeId={item.productDetailSize?.id} key={index} name={name} price={item.productDetail?.discountPrice} quantity={item.quantity} image={item.productImage?.[0]?.image} />
                                                     )
                                                 })
 
@@ -201,7 +201,7 @@ function DetailOrder(props) {
                                         <span className="name-easier">Easier voucher</span>
 
 
-                                        <span className="choose-voucher">Mã voucher: {DataOrder && DataOrder.voucherData && DataOrder.voucherData.codeVoucher}</span>
+                                        <span className="choose-voucher">Mã voucher: {DataOrder && DataOrder.voucherData?.codeVoucher}</span>
 
 
                                     </div>
@@ -238,7 +238,7 @@ function DetailOrder(props) {
                     </div>
                     <div className="content-top" style={{ display: 'flex', gap: '10px' }}>
                         <span>Trạng Thái Đơn Hàng</span>
-                        <div className='box-type-payment active'>{DataOrder.statusOrderData && DataOrder.statusOrderData.value}</div>
+                        <div className='box-type-payment active'>{DataOrder.statusOrderData?.value}</div>
 
                     </div>
                     <div className="content-top" style={{ display: 'flex', gap: '10px' }}>

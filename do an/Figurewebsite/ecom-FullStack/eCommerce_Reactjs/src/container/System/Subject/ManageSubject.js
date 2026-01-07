@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useFetchAllcode } from '../../customize/fetch';
 import { DeleteAllcodeService, getListAllCodeService } from '../../../services/userService';
 import moment from 'moment';
 import { toast } from 'react-toastify';
@@ -17,7 +18,7 @@ import FormSearch from '../../../component/Search/FormSearch';
 const ManageSubject = () => {
 
     const [dataSubject, setdataSubject] = useState([])
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState('')
     const [numberPage, setnumberPage] = useState('')
     const [keyword, setkeyword] = useState('')
     useEffect(() => {
@@ -93,7 +94,7 @@ const ManageSubject = () => {
             offset: '',
             keyword:''
         })
-        if(res && res.errCode === 0){
+        if(res && res.errCode == 0){
             await CommonUtils.exportExcel(res.data,"Danh sách chủ đề","ListSubject")
         }
     }
@@ -113,11 +114,11 @@ const ManageSubject = () => {
                     <FormSearch title={"tên chủ đề"}  handleOnchange={handleOnchangeSearch} handleSearch={handleSearchSubject} />
                     </div>
                     <div className='col-8'>
-                    <button  style={{float:'right'}} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                    <button  style={{float:'right'}} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i class="fa-solid fa-file-excel"></i></button>
                     </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -138,7 +139,7 @@ const ManageSubject = () => {
                                                 <td>
                                                     <Link to={`/admin/edit-Brand/${item.id}`}>Edit</Link>
                                                     &nbsp; &nbsp;
-                                                    <button className="btn btn-link" onClick={(event) => handleDeleteSubject(event, item.id)} >Delete</button>
+                                                    <a href="#" onClick={(event) => handleDeleteSubject(event, item.id)} >Delete</a>
                                                 </td>
                                             </tr>
                                         )

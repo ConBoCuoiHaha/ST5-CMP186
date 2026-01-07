@@ -52,13 +52,14 @@ function HomePageAdmin(props) {
     return (
 
         <Router>
-            <div className="sb-nav-fixed">
-                <Header />
-                <div id="layoutSidenav">
-                    <SideBar />
-                    <div id="layoutSidenav_content">
-                        <main>
-                            <Switch>
+
+            <Switch>
+                <div className="sb-nav-fixed">
+                    <Header />
+                    <div id="layoutSidenav">
+                        <SideBar />
+                        <div id="layoutSidenav_content">
+                            <main>
                                 <Route exact path="/admin/">
                                     <Home />
                                 </Route>
@@ -206,12 +207,14 @@ function HomePageAdmin(props) {
                                 <Route exact path="/admin/stock-product">
                                     <StockProduct />
                                 </Route>
-                            </Switch>
-                        </main>
-                        <Footer />
+                            </main>
+                            <Footer />
+                        </div>
                     </div>
+
                 </div>
-            </div>
+            </Switch>
+
         </Router>
 
     );

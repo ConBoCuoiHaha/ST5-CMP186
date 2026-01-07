@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 require('dotenv').config();
 
 const instance = axios.create({
@@ -49,6 +50,7 @@ if (localStorage.getItem("token")) {
 instance.interceptors.response.use(
     (response) => {
         // Thrown error for request with OK status code
+        const { data } = response;
         return response.data
     }
 );

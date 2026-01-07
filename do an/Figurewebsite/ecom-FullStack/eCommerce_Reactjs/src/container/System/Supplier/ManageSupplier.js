@@ -19,7 +19,7 @@ import {
 const ManageSupplier = () => {
     const [keyword, setkeyword] = useState('')
     const [dataSupplier, setdataSupplier] = useState([])
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState('')
     const [numberPage, setnumberPage] = useState('')
     useEffect(() => {
         try {
@@ -41,7 +41,7 @@ const ManageSupplier = () => {
         })
         if (arrData && arrData.errCode === 0) {
             setdataSupplier(arrData.data)
-            setCount(arrData.count ? Math.ceil(arrData.count / PAGINATION.pagerow) : 0)
+            setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
         }
     }
     let handleDeleteSupplier = async (event, id) => {
@@ -62,7 +62,7 @@ const ManageSupplier = () => {
             })
             if (arrData && arrData.errCode === 0) {
                 setdataSupplier(arrData.data)
-                setCount(arrData.count ? Math.ceil(arrData.count / PAGINATION.pagerow) : 0)
+                setCount(Math.ceil(arrData.count / PAGINATION.pagerow))
             }
 
         } else toast.error("Xóa nhà cung cấp thất bại")
@@ -120,11 +120,11 @@ const ManageSupplier = () => {
                     <FormSearch title={"tên nhà cung cấp"}  handleOnchange={handleOnchangeSearch} handleSearch={handleSearchSupplier} />
                     </div>
                     <div className='col-8'>
-                    <button  style={{float:'right'}} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                    <button  style={{float:'right'}} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i class="fa-solid fa-file-excel"></i></button>
                     </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -149,7 +149,7 @@ const ManageSupplier = () => {
                                                 <td>
                                                     <Link to={`/admin/edit-Supplier/${item.id}`}>Edit</Link>
                                                     &nbsp; &nbsp;
-                                                    <a href="#!" onClick={(event) => handleDeleteSupplier(event, item.id)} >Delete</a>
+                                                    <a href="#" onClick={(event) => handleDeleteSupplier(event, item.id)} >Delete</a>
                                                 </td>
                                             </tr>
                                         )
@@ -160,29 +160,26 @@ const ManageSupplier = () => {
                             </tbody>
                         </table>
                     </div>
-                    <ReactPaginate
-                        previousLabel={'Quay lại'}
-                        nextLabel={'Tiếp theo'}
-                        breakLabel={'...'}
-                        pageCount={count}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={3}
-                        onPageChange={handleChangePage}
-                        containerClassName={'pagination justify-content-center'}
-                        pageClassName={'page-item'}
-                        pageLinkClassName={'page-link'}
-                        previousClassName={'page-item'}
-                        previousLinkClassName={'page-link'}
-                        nextClassName={'page-item'}
-                        nextLinkClassName={'page-link'}
-                        breakClassName={'page-item'}
-                        breakLinkClassName={'page-link'}
-                        activeClassName={'active'}
-                    />
                 </div>
             </div>
+            <ReactPaginate
+                previousLabel={'Quay lại'}
+                nextLabel={'Tiếp'}
+                breakLabel={'...'}
+                pageCount={count}
+                marginPagesDisplayed={3}
+                containerClassName={"pagination justify-content-center"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                activeClassName={"active"}
+                onPageChange={handleChangePage}
+            />
         </div>
-    );
+    )
 }
-
 export default ManageSupplier;

@@ -6,12 +6,12 @@ function HomeBlogItem(props) {
         <div className="col-lg-4 col-md-6">
             <div className="single-blog">
                 <div className="thumb">
-                    <img style={{width:'350px', height:'243px', objectFit:'cover', cursor:'pointer'}} className="img-fluid" src={props.data.image} alt="" />
+                    <img style={{ width: '350px', height: '243px', objectFit: 'cover', cursor: 'pointer' }} className="img-fluid" src={props.data.image} alt="" />
                 </div>
                 <div className="short_details">
                     <div className="meta-top d-flex">
-                    <span><i className="ti-comments-smiley" />{props.data.commentData.length} Nghĩa</span>
-                        <span><i className="ti-comments-smiley" />{props.data.commentData.length} Bình luận</span>
+                        <a ><i className="ti-comments-smiley" />{props.data.commentData.length} Like</a>
+                        <a ><i className="ti-comments-smiley" />{props.data.commentData.length} Bình luận</a>
                     </div>
                     <Link className="d-block" to={`/blog-detail/${props.data.id}`}>
                         <h4>{props.data.title}</h4>
@@ -21,7 +21,7 @@ function HomeBlogItem(props) {
                             {props.data.description}
                         </p>
                     </div>
-                    <Link to={`/blog-detail/${props.data.id}`} className="blog_btn">Xem thêm<span className="ml-2 ti-arrow-right" /></Link>
+                    <a className="blog_btn">Xem thêm<span className="ml-2 ti-arrow-right" /></a>
                 </div>
             </div>
         </div>

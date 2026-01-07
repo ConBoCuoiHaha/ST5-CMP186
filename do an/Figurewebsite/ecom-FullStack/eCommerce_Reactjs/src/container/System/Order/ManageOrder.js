@@ -17,7 +17,8 @@ import {
 const ManageOrder = () => {
 
     const [dataOrder, setdataOrder] = useState([])
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState('')
+    const [numberPage, setnumberPage] = useState('')
     const { data: dataStatusOrder } = useFetchAllcode('STATUS-ORDER');
     const [StatusId, setStatusId] = useState('ALL')
     useEffect(() => {
@@ -51,6 +52,7 @@ const ManageOrder = () => {
 
     }
     let handleChangePage = async (number) => {
+        setnumberPage(number.selected)
         let arrData = await getAllOrder({
             limit: PAGINATION.pagerow,
             offset: number.selected * PAGINATION.pagerow,
@@ -68,7 +70,7 @@ const ManageOrder = () => {
             offset: '',
             statusId: 'ALL'
         })
-        if (res && res.errCode === 0) {
+        if (res && res.errCode == 0) {
             await CommonUtils.exportExcel(res.data, "Danh sách đơn hàng", "ListOrder")
         }
 
@@ -83,8 +85,8 @@ const ManageOrder = () => {
                     <i className="fas fa-table me-1" />
                     Danh sách đơn đặt hàng
                 </div>
-                <select onChange={(event) => handleOnchangeStatus(event)} value={StatusId} className="form-select col-3 ml-3 mt-3">
-                    <option value={'ALL'}>Trạng thái đơn hàng</option>
+                <select onChange={(event) => handleOnchangeStatus(event)} class="form-select col-3 ml-3 mt-3">
+                    <option value={'ALL'} selected>Trạng thái đơn hàng</option>
                     {
                         dataStatusOrder && dataStatusOrder.length > 0 &&
                         dataStatusOrder.map((item, index) => {
@@ -98,11 +100,11 @@ const ManageOrder = () => {
                     <div className='row'>
 
                         <div className='col-12 mb-2'>
-                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i className="fa-solid fa-file-excel"></i></button>
+                            <button style={{ float: 'right' }} onClick={() => handleOnClickExport()} className="btn btn-success" >Xuất excel <i class="fa-solid fa-file-excel"></i></button>
                         </div>
                     </div>
                     <div className="table-responsive">
-                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellSpacing="0">
+                        <table className="table table-bordered" style={{ border: '1' }} width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Mã đơn</th>
@@ -125,13 +127,13 @@ const ManageOrder = () => {
                                         return (
                                             <tr key={index}>
                                                 <td>{item.id}</td>
-                                                <td>{item.userData.phonenumber}</td>
-                                                <td>{item.userData.email}</td>
+                                                <td>{item.userData?.phonenumber}</td>
+                                                <td>{item.userData?.email}</td>
                                                 <td>{moment.utc(item.createdAt).local().format('DD/MM/YYYY HH:mm:ss')}</td>
-                                                <td>{item.typeShipData.type}</td>
-                                                <td>{item.voucherData.codeVoucher}</td>
+                                                <td>{item.typeShipData?.type}</td>
+                                                <td>{item.voucherData?.codeVoucher}</td>
                                                 <td>{item.isPaymentOnlien == 0 ? 'Thanh toán tiền mặt' : 'Thanh toán online'}</td>
-                                                <td>{item.statusOrderData.value}</td>
+                                                <td>{item.statusOrderData?.value}</td>
                                                 <td>{item.shipperData && item.shipperData.firstName + " " + item.shipperData.lastName + " - " + item.shipperData.phonenumber}</td>
                                                 <td>
                                                     <Link to={`/admin/order-detail/${item.id}`}>Xem chi tiết</Link>

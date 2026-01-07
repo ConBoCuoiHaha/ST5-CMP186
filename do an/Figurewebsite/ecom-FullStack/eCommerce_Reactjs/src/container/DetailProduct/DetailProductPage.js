@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { getDetailProductByIdService, getProductRecommendService } from '../../services/userService';
+import ImgDetailProduct from '../../component/Product/ImgDetailProduct';
 import InfoDetailProduct from '../../component/Product/InfoDetailProduct';
+import CommentProduct from '../../component/Product/CommentProduct';
 import ProfileProduct from '../../component/Product/ProfileProduct';
 import ReviewProduct from '../../component/Product/ReviewProduct';
 import DescriptionProduct from '../../component/Product/DescriptionProduct';
+import NewProductFeature from "../../component/HomeFeature/NewProductFeature"
 import ProductFeature from '../../component/HomeFeature/ProductFeature';
 function DetailProductPage(props) {
     const [dataProduct, setDataProduct] = useState({})
@@ -12,29 +15,30 @@ function DetailProductPage(props) {
     const { id } = useParams();
     const [user, setUser] = useState({})
     const [dataProductRecommend, setdataProductRecommend] = useState([])
-    useEffect(() => {
-        const fetchData = async () => {
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            if (userData) {
-                fetchProductFeature(userData.id);
-                setUser(userData);
-            }
+    useEffect(async () => {
 
-            window.scrollTo(0, 0);
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        if (userData) {
+            fetchProductFeature(userData.id)
+            setUser(userData)
+        }
 
-            let res = await getDetailProductByIdService(id);
-            if (res && res.errCode === 0) {
-                setDataProduct(res.data);
-            }
-        };
+        window.scrollTo(0, 0);
 
-        fetchData();
-    }, [id]);
 
+        fetchDetailProduct()
+
+
+    }, [])
     let sendDataFromInforDetail = (data) => {
         setdataDetailSize(data)
     }
-
+    let fetchDetailProduct = async () => {
+        let res = await getDetailProductByIdService(id)
+        if (res && res.errCode === 0) {
+            setDataProduct(res.data)
+        }
+    }
     let fetchProductFeature = async (userId) => {
         let res = await getProductRecommendService({
             limit: 20,
